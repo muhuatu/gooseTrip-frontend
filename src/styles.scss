@@ -1,0 +1,366 @@
+/* You can add global styles to this file, and also import other style files */
+@use "@angular/material" as mat;
+@use "sass:color";
+
+// Tab 樣式
+:root {
+  --adp-background: #ffffff !important;
+  --adp-header-bg: #4285f4 !important;
+
+  // 分別配置 paginator 和 tabs
+  @include mat.paginator-overrides(
+    (
+      container-text-color: #555,
+      container-text-font: 8px,
+      container-text-tracking: 0,
+      container-size: -6,
+      select-trigger-text-size: 10px,
+      form-field-container-height: -5,
+      form-field-container-vertical-padding: -5,
+      touch-target-display: -5,
+    )
+  );
+
+  @include mat.tabs-overrides(
+    (
+      active-indicator-color: #f5c170,
+      // 選中的 Tab 底線顏色
+      active-focus-indicator-color: #f5c170,
+      active-hover-indicator-color: #f5c170,
+      active-indicator-height: 3px // 底線高度,,,,,,,
+    )
+  );
+}
+
+// 限制在 .my-custom-tabs 容器內的樣式設定
+.my-custom-tabs {
+  @include mat.tabs-overrides(
+    (
+      active-indicator-color: #f5c170,
+      // 選中的 Tab 底線顏色
+      active-focus-indicator-color: #f5c170,
+      active-hover-indicator-color: #f5c170,
+      active-indicator-height: 3px,
+      container-height: 40px,
+    )
+  );
+}
+
+html,
+body {
+  height: 100%;
+  overflow-y: auto;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #fffdfb;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+
+  @font-face {
+    font-family: "ChenYuluoyan-Thin";
+    font-style: cursive;
+    font-weight: 400;
+    font-display: swap;
+    src: url(https://im1010ioio.github.io/super-easy-css/fonts/ChenYuluoyan-Thin.ttf)
+      format("truetype");
+    /* 正確的格式是 truetype */
+  }
+}
+
+$yellow: #f5c170;
+$back: #f6f3eb;
+$black: #555;
+
+// 修改 map 組件選擇路徑的 CSS
+#directions-panel {
+  all: unset; // 去除內建樣式
+  width: 100% !important;
+  // width: 250px !important; // 沒用
+  // max-width: 250px !important; // 會變大變小
+  box-sizing: border-box;
+  background: $back;
+  height: calc(100vh - 350px);
+  // overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+.mat-drawer-inner-container {
+  overflow: unset !important;
+}
+
+/* 整體容器設置 */
+.adp-list {
+  all: unset;
+  border: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* 表格設置 */
+.adp-fullwidth {
+  width: 100% !important;
+  table-layout: fixed !important;
+  border-collapse: collapse;
+  // margin: 0 5px 0 20px;
+  padding: 0;
+  background-color: transparent;
+  // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  // border-radius: 8px;
+}
+
+.adp-listheader,
+.adp-listsel {
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  //border-radius: 8px;
+}
+
+/* 標題行樣式 */
+.adp-listheader {
+  background-color: $yellow !important;
+  color: white !important;
+  padding: 12px 15px !important; // 格子內的間距
+  font-weight: bold;
+  font-size: 16px;
+  width: 100% !important;
+  box-sizing: border-box;
+  display: block;
+}
+
+/* 路線項目行設置 */
+.adp-listsel {
+  padding: 12px 15px;
+  background-color: color.adjust($yellow, $lightness: 20%) !important;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  width: 100% !important;
+  box-sizing: border-box;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.adp-listsel.selected,
+.adp-listsel:active,
+.adp-listsel.active {
+  background-color: $yellow !important;
+  color: #fff !important;
+}
+
+td[jstcache="117"],
+td[jstcache="152"] {
+  word-wrap: break-word !important;
+  word-break: break-word !important;
+  white-space: normal !important;
+  padding: 12px 15px !important;
+  width: 100% !important;
+  cursor: pointer;
+  //border-radius: 8px;
+}
+
+td[jstcache="117"]:hover {
+  background-color: rgb(251.6666666667, 234.3333333333, 207.3333333333);
+}
+
+/* 路線信息樣式 */
+.adp-listinfo {
+  display: flex;
+  // justify-content: space-between; // 地名、距離、時間的排列
+  align-items: center;
+  font-size: 14px;
+  color: $black;
+  margin-top: 5px;
+}
+
+//地名
+.adp-listinfo b {
+  flex: 1;
+  text-align: left;
+  font-size: 14px;
+  color: $black;
+  font-family: Roboto, "Helvetica Neue", sans-serif !important;
+}
+
+//幾公里
+.adp-listinfo span[jstcache="119"] {
+  flex: 1;
+  text-align: center;
+}
+
+//那個點.
+.adp-listinfo span[jstcache="120"] {
+  display: none !important;
+}
+
+//幾分鐘
+.adp-listinfo span[jstcache="121"] {
+  flex: 1.1;
+  text-align: right;
+}
+
+//點選到的
+.adp-listsel {
+  font-weight: bold;
+  color: black;
+}
+
+// 點選加粗
+.adp-listsel b {
+  font-weight: bold !important;
+  color: black;
+}
+
+////大眾運輸樣式/////////////////////////////
+
+li[jstcache="3"],
+li[jstcache="38"] {
+  cursor: pointer;
+  padding: 10px 12px !important;
+  line-height: 2; //行間間距
+  display: flex;
+  // flex-direction: row-reverse;
+  // justify-content: space-between;
+  // align-items: center;
+  flex-direction: column-reverse; //或是要垂直放
+  gap: 2.7%;
+
+  // border-bottom: 2px dashed #8e8e8e;
+
+  //長一點的虛線
+  border: none;
+  background-image: repeating-linear-gradient(
+    to right,
+    #c0bdbd 0px,
+    #c0bdbd 5px,
+    transparent 5px,
+    transparent 10px
+  );
+  //5px是長度， transparent 10px-5px=5是間距
+  background-position: bottom;
+  background-repeat: repeat-x;
+  background-size: 100% 2px;
+
+  &:hover {
+    background-color: color.adjust($yellow, $lightness: 20%);
+  }
+}
+
+li[jstcache="3"],
+li[jstcache="38"] div {
+  flex: 1;
+  max-width: 100%;
+}
+
+//幾分鐘
+.adp-summary-duration {
+  flex: 0.4 !important;
+  color: #555;
+  font-weight: bold !important;
+  font-size: 14px !important;
+  margin-left: 0 !important;
+  text-align: end;
+}
+
+//箭頭
+img[jstcache="7"],
+li[jstcache="42"] {
+  margin: 3px 1px 8px !important;
+}
+
+//走路、車子、捷運的符號
+img[jstcache="8"],
+li[jstcache="43"] {
+  top: 0 !important;
+  margin: 2px 0 !important;
+}
+
+//捷運跟公車名稱
+span[jstcache="9"],
+li[jstcache="44"] {
+  margin: 3px 0 !important;
+  color: #555;
+  border-radius: 5px;
+  filter: brightness(1.1); //背景顏色調亮一點
+  padding: 3px !important;
+  font-weight: bold !important;
+  font-family: Roboto, "Helvetica Neue", sans-serif !important;
+  font-size: 14px !important;
+  white-space: break-spaces;
+  // word-break: break-all;
+}
+
+/************ 大眾運輸特定樣式(沒用但還是先留著研究) ************/
+// table.adp-directions {
+//   all: unset;
+//   width: 100% !important;
+//   margin: 0 !important;
+// }
+
+// table.adp-directions tr {
+//   display: block !important;
+//   margin: 10px 0 !important;
+//   padding: 10px 15px !important;
+//   background-color: white !important;
+//   border-bottom: 1px solid #eee !important;
+// }
+
+// table.adp-directions td {
+//   display: block !important;
+//   padding: 8px 0 !important;
+//   line-height: 1.6 !important;
+// }
+
+// /* 處理步驟說明 */
+// div.adp-substep {
+//   margin: 8px 0 !important;
+//   padding: 8px 0 !important;
+//   border-bottom: 1px solid #eee !important;
+// }
+
+// /* 確保圖標和文字對齊 */
+// td.adp-substep img {
+//   vertical-align: middle !important;
+//   margin-right: 8px !important;
+// }
+
+/* 確保所有文字有足夠間距 */
+#directions-panel td > div,
+#directions-panel td > span {
+  margin: 6px 0 !important;
+  line-height: 1.5 !important;
+}
+
+// /* 處理站名和路線號碼 */
+// #directions-panel td.adp-substep b {
+//   display: inline-block !important;
+//   margin: 5px 0 !important;
+// }
+
+// /* 處理轉乘說明 */
+// #directions-panel .adp-summary {
+//   padding: 12px 15px !important;
+//   margin: 5px 0 !important;
+//   background-color: white !important;
+// }
+
+// /* 確保所有文字有足夠間距 */
+// #directions-panel td>div,
+// #directions-panel td>span {
+//   margin: 6px 0 !important;
+//   line-height: 1.5 !important;
+// }
+
+// /* 處理時間和距離信息 */
+// #directions-panel .adp-summary span {
+//   margin: 0 5px !important;
+// }

@@ -1,0 +1,308 @@
+@use "sass:color";
+$yellow: #f5c170;
+$back: #f6f3eb;
+$black: #555;
+$red: #d5100b;
+$brown: #f2f0ea;
+
+/********************** 貼文區 **********************/
+.post-section {
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(232, 232, 232, 0.5) rgba(255, 255, 255, 0.5); // 滾動條顏色, 滑道顏色
+}
+
+// 貼文資料
+.post-content {
+  background-color: #fff;
+  padding: 15px 20px 0 20px;
+  position: sticky;
+  top: 0; // 固定在容器頂部
+  z-index: 10;
+
+  .authorAndIcon {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 20px;
+  }
+
+  .back-icon {
+    color: #555;
+    margin-right: 10px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 25px;
+    font-weight: 700;
+    color: rgb(82, 79, 79);
+  }
+}
+
+.author-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0;
+
+  .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+  }
+
+  .author-details {
+    h2 {
+      font-size: 18px;
+      margin: 0;
+    }
+
+    p {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+    }
+  }
+
+  .post {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    .post-time {
+      font-size: 16px;
+      line-height: 1;
+      color: #333;
+    }
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 5px;
+
+  h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 800;
+    color: rgb(82, 79, 79);
+  }
+}
+
+.icon-send {
+  border-radius: 50%;
+  background-color: #f5c170;
+  width: 40px;
+  margin-top: 1.5%;
+}
+
+.material-icons {
+  color: #f6f3eb;
+  padding-left: 0.5rem;
+  padding-top: 0.5rem;
+  transform: rotate(-45deg);
+  cursor: pointer;
+}
+
+// 滑鼠經過時旋轉效果
+.material-icons:hover {
+  animation: rotateIcon 0.3s ease-out;
+}
+
+@keyframes rotateIcon {
+  0% {
+    transform: rotate(-45deg) scale(1.1);
+  }
+
+  50% {
+    transform: rotate(-30deg) scale(1.15);
+  }
+
+  100% {
+    transform: rotate(-45deg) scale(1.1);
+  }
+}
+
+// 貼文內容
+.post-text {
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 5px 15px;
+  display: flex;
+  flex-direction: column; //垂直排列
+
+  textarea {
+    width: 100%;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(51, 51, 51, 0.3);
+    outline: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    min-height: 100px;
+    transition: max-height 0.3s ease;
+    padding: 10px;
+
+    &:hover {
+      border: 1px solid #f5c170;
+    }
+
+    &.truncated {
+      white-space: nowrap; // 顯示單行
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-height: 3em; // 限制最大高度，約為三行
+    }
+  }
+
+  button {
+    color: $black;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    align-self: flex-end; // 將按鈕對齊右邊
+
+    &:hover {
+      background-color: color.adjust(white, $lightness: -10%);
+      transform: scale(1.05);
+      transition: 0.3s;
+    }
+
+    &:active {
+      background-color: color.adjust(white, $lightness: -10%);
+      transform: scale(1.05);
+      transition: 0.3s;
+    }
+  }
+}
+
+// 地圖區
+::ng-deep .mat-expansion-panel-body {
+  padding: 0 !important;
+}
+
+/********************** TABS區 **********************/
+
+mat-tab-group {
+  margin: 0 15px;
+
+  .tab-content {
+    flex: 1;
+    padding: 10px;
+  }
+
+  h4 {
+    margin: 0 0 0 1%;
+  }
+
+  // 景點區
+  .spot-info {
+    margin: 10px 0;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 50px;
+  }
+
+  .spot {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    gap: 10px;
+  }
+
+  // 景點筆記
+  textarea {
+    width: 50vw;
+    height: 150px;
+    border-radius: 10px;
+    background-color: $back;
+    border: none;
+    padding: 10px; // 框跟文字的間距
+    outline: none;
+  }
+
+  .spot-info img {
+    margin-top: 2%;
+    max-width: 200px;
+  }
+
+  /*-----------------------------圖片上傳---------------------------------*/
+  .upload-file {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 10px; // 按鈕與圖片間的間距
+    overflow: hidden;
+  }
+
+  // 用 label 把原生的檔案選擇框隱藏
+  .file-container {
+    position: relative;
+    display: inline-block;
+    /* 使容器內的元素可以被正確定位 */
+
+    input[type="file"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      /* 隱藏檔案選擇框 */
+      width: 100%;
+      /* 確保 input 占滿整個容器 */
+      height: 100%;
+      /* 同上，確保 input 占滿整個容器 */
+      cursor: pointer;
+    }
+
+    .file-label {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #f5c170;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+      // margin-top: 5px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .file-label:hover {
+      background-color: #ffa841;
+      /* 滑鼠懸停改變背景色 */
+      transform: scale(1.05);
+      /* 滑鼠懸停時稍微放大 */
+    }
+  }
+
+  .clearImg {
+    padding: 10px 20px;
+    margin-right: 1rem;
+    border: none;
+    background-color: #555;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  hr {
+    margin: 0;
+    border: 0.5px solid #ddd;
+  }
+}

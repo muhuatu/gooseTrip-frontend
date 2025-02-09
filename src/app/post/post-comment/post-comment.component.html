@@ -1,0 +1,285 @@
+<div class="content-container">
+  <!-- 貼文區 -->
+  <div class="post-section">
+    <!-- 貼文內容 -->
+    <div class="post-content">
+      <div class="authorAndIcon">
+        <!-- 作者區 -->
+        <div class="author-info">
+          <img [src]="userImage" alt="作者頭像" class="avatar" />
+          <div class="author-details">
+            <h2>{{ userName }}</h2>
+            <div class="post">
+              <p>{{ postTime }}</p>
+              <div class="icon-like">
+                <span class="material-symbols-outlined">thumb_up</span>
+                <span>{{ thumbUps }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ICON區 -->
+        <div class="actions">
+          <button class="icon back-icon" mat-icon-button (click)="goBack()" matTooltip="回上一頁"
+            matTooltipPosition="above">
+            <span class="material-icons">arrow_back</span>
+          </button>
+          @if(sessionUserMail!=userMail && sessionUserMail != null){
+          <button class="icon like-icon" mat-icon-button [class.active]="userReaction === 'thumbUp'"
+            (click)="thumbAct()" matTooltip="按讚鼓勵" matTooltipPosition="above" [disabled]="thumbupTime">
+            <span class="material-icons">thumb_up</span>
+          </button>
+          <button class="icon favorite-icon" mat-icon-button (click)="toggleFavorite()" [ngClass]="{ active: isFavorited }" matTooltip="收藏貼文" matTooltipPosition="above" [disabled]="favoriteTime">
+            <span class="material-icons">{{
+              isFavorited ? "favorite" : "favorite_border"
+              }}</span>
+          </button>
+          <button class="icon copy-icon" mat-icon-button (click)="copyJourney()" matTooltip="複製行程"
+            matTooltipPosition="above" [disabled]="copyTime">
+            <span class="material-icons">content_copy</span>
+          </button>
+          }
+          <!-- 未登入無法使用互動按鈕 -->
+          @if (sessionUserMail == null) {
+            <button class="icon like-icon" mat-icon-button matTooltip="登入後按讚" matTooltipPosition="above" disabled="true" style="background-color:	#D0D0D0; border: none;">
+              <span class="material-icons">thumb_up</span>
+            </button>
+            <button class="icon like-icon" mat-icon-button matTooltip="登入後收藏" matTooltipPosition="above" disabled="true" style="background-color:	#D0D0D0; border: none;">
+              <span class="material-icons">favorite</span>
+            </button>
+            <button class="icon like-icon" mat-icon-button matTooltip="登入後複製行程" matTooltipPosition="above" disabled="true" style="background-color:	#D0D0D0; border: none;">
+              <span class="material-icons">content_copy</span>
+            </button>
+          }
+        </div>
+      </div>
+
+      <hr />
+      <!-- 分隔線 -->
+    </div>
+
+    <!-- 貼文內容 -->
+    <div class="header">
+      <h1>{{ journeyName }}</h1>
+    </div>
+    <div class="post-text">
+      <p [ngClass]="{ truncated: isTruncated }">{{ postContent }}</p>
+      <button (click)="toggleText()">
+        {{ isTruncated ? "查看更多" : "收起內容" }}
+      </button>
+    </div>
+    <!-- 地圖 -->
+    <div class="map" style="display: flex; justify-content: space-around; margin-bottom: 20px">
+      <mat-accordion displayMode="flat">
+        <mat-expansion-panel expanded="true" (opened)="panelOpenState.set(false)" (closed)="panelOpenState.set(true)"
+          style="
+            box-shadow: none;
+            background-color: #f2f0ea;
+            width: 67vw;
+            padding: 0;
+          ">
+          <mat-expansion-panel-header>
+            <mat-panel-description style="font-weight: bold; color: #555">
+            {{ panelOpenState() ? "顯示足跡地圖" : "隱藏足跡地圖" }}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div id="map" style="height: 400px; width: 67vw"></div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    <!-- TAB區: 每日景點 -->
+    <mat-tab-group class="my-custom-tabs" (selectedTabChange)="onTabChanged($event)" dynamicHeight>
+      @for(tab of tabs; track $index){
+      <mat-tab [label]="tab.label">
+        <div class="tab-content">
+          @for(spot of tab.spots; track $index){
+          <div class="spot-info">
+            <!-- 視窗滾動會抓取的id -->
+            <div class="spot" id="{{ spot.spotName }}">
+              <div>
+                <h4>{{ spot.spotName }}</h4>
+                <p>{{ spot.spotNote }}</p>
+              </div>
+              <div style="display: flex; flex-direction: row; gap: 5px">
+                <i class="fa-solid fa-clock" style="margin-top: 2px"></i>
+                <p style="font-size: 14px; margin: 0">
+                  停留時間：{{ spot.duration }} 小時
+                </p>
+              </div>
+            </div>
+            <div class="spot">
+              @if(spot.spotImage) {
+              <img [src]="this.imgFormat.generateImageWithPrefix(spot.spotImage)" alt="景點圖片" />
+              } @else {
+              <img src="assets/default_spotImg.jpeg" alt="預設圖片" />
+              }
+              <!-- <img [src]="spot.spotImage" alt="景點圖片" /> -->
+            </div>
+          </div>
+          <hr />
+          <!-- 每個景點之間用分隔線 -->
+          }
+        </div>
+      </mat-tab>
+      }
+    </mat-tab-group>
+  </div>
+
+  <!-- 分隔箭頭 -->
+  <div class="divider" (mousedown)="onMouseDown($event)" matTooltip="版面可以左右調整哦！"></div>
+
+  <!-- 評論區 -->
+  <div class="comment-section">
+    <h3 style="display: flex; justify-content: center; margin-top: 10px">
+      評論區
+    </h3>
+
+    <!-- 顯示每個評論 -->
+    @for(comment of comments; track $index){
+
+    <!-- 父評論： replyCommentId === 0 -->
+    @if(comment.replyCommentId === 0){
+    <div class="comment-box">
+      <div class="comment">
+        <div style="
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+          ">
+          <img [src]="comment.userImage" [alt]="comment.userName" class="avatar" />
+          <p>
+            <strong>{{ comment.userName }}</strong>
+          </p>
+        </div>
+        <p [style.whiteSpace]="'pre-line'">{{ comment.commentContent }}</p>
+        <!-- 時間和回覆按鈕 -->
+        <div style="
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+          ">
+          <small>{{ comment.commentTime }}</small>
+          <!--未登入無法留言 -->
+          @if (sessionUserMail != null) {
+            <button class="reply-btn" matTooltip="點擊回覆" matTooltipPosition="below"
+          (click)="toggleReply(comment.commentId)">回覆</button>
+            @if(sessionUserMail === comment.userMail) {
+            <button class="delete-btn" matTooltip="點擊編輯評論" matTooltipPosition="below"
+              (click)="getComment(comment.serialNumber)">編輯</button>
+            <button class="delete-btn" matTooltip="點擊刪除評論" matTooltipPosition="below"
+              (click)="deleteComment(comment.postId ,comment.commentId)">刪除</button>
+            }
+          }
+
+        </div>
+      </div>
+
+      <!-- 子評論： replyCommentId === commentId  -->
+      @if(hasReplies(comment.commentId)) {
+      <div class="reply-container">
+        <!-- 弄成一包放父評論底下 -->
+        @for(reply of getRepliesByCommentId(comment.commentId); track $index){
+        <div class="reply">
+          <div style="
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              gap: 10px;
+            ">
+            <span class="material-symbols-outlined" style="color: #f5c170; font-weight: bold">
+              subdirectory_arrow_right
+            </span>
+            <img [src]="reply.userImage" [alt]="reply.userName" class="avatar" />
+            <p>
+              <strong>{{ reply.userName }}</strong>
+            </p>
+          </div>
+          <!-- <div style="display: flex; flex-direction: column; gap: -10px;"> -->
+          <p style="padding-left: 35px" [style.whiteSpace]="'pre-line'">
+            {{ reply.commentContent }}
+          </p>
+          <div style="
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              gap: 10px;
+              padding-left: 35px;
+            ">
+            <small>{{ reply.commentTime }}</small>
+            <!-- 判斷是否為留言本人的帳號 -->
+            @if (sessionUserMail === reply.userMail) {
+            <button class="delete-btn" matTooltip="點擊編輯評論" matTooltipPosition="below"
+              (click)="getComment(reply.serialNumber)">編輯</button>
+
+            <button class="delete-btn" matTooltip="點擊刪除評論" matTooltipPosition="below"
+              (click)="deleteComment(reply.postId, reply.commentId)">刪除</button>
+            }
+          </div>
+        </div>
+        }
+      </div>
+      }
+    </div>
+    }
+
+    <!-- 回覆父評論的情況：按了回覆按鈕要有input框 -->
+    @if(activeReplyId === comment.commentId){
+    <div class="add-comment" style="margin: 0; padding: 0">
+      <div style="
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 10px;
+        ">
+        <img [src]="sessionUserImage" [alt]="sessionUserName" class="avatar" />
+        <p>
+          <strong>{{ sessionUserName }}</strong>
+        </p>
+      </div>
+
+      @if (this.flag === 1) {
+      <textarea [(ngModel)]="editComments"></textarea>
+      <div class="cancel-comment-btn">
+        <button class="cancel-btn" (click)="closeCommentTextArea()">取消</button>
+        <button class="comment-btn" (click)="editComment(comment.serialNumber)">更新評論</button>
+      </div>
+      } @else {
+      <div style="display: flex; flex-direction: row; align-items: center;">
+        <span class="material-symbols-outlined" style="color: #f5c170; font-weight: bold;">
+          subdirectory_arrow_right
+        </span>
+        <textarea [(ngModel)]="newReply" placeholder="回覆此評論，按 Enter 換行"
+        style="width: 90%;"></textarea>
+      </div>
+
+      <div class="cancel-comment-btn">
+        <button class="cancel-btn" (click)="closeCommentTextArea()">取消</button>
+        <button class="comment-btn" (click)="replyComment(comment.commentId)">發表評論</button>
+      </div>
+      }
+    </div>
+    } }
+
+    <!-- 發言: 未登入無法留言 -->
+    @if(!replyStatus && sessionUserMail != null) {
+    <div class="add-comment">
+      <div style="
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 10px;
+        ">
+        <img [src]="sessionUserImage" [alt]="sessionUserName" class="avatar" />
+        <p>
+          <strong>{{ sessionUserName }}</strong>
+        </p>
+      </div>
+      <textarea [(ngModel)]="newComment" placeholder="請輸入評論，按 Enter 換行"></textarea>
+      <button (click)="replyPost()">發表評論</button>
+    </div>
+    }
+  </div>
+</div>

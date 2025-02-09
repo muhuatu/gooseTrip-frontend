@@ -1,0 +1,574 @@
+@use "sass:color";
+$yellow: #f5c170;
+$back: #f6f3eb;
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  column-gap: 7px;
+  font-size: 14px;
+  font-weight: 600;
+  width: 100%;
+  // margin: auto;
+  position: absolute;
+  bottom: 0;
+
+  input[type="radio"] {
+    display: none;
+
+    &:checked {
+      + label {
+        color: black;
+        transform: translatey(-1px) scale(1.05);
+        background-color: #f2f0ea;
+        border: 2px solid #f2f0ea;
+        border-radius: 5px 15px 0px 0px;
+
+        + .tab-content {
+          display: block;
+        }
+      }
+    }
+  }
+
+  label {
+    padding: 0.45em 0.75em;
+    color: #555;
+    background-color: #d3d3d3;
+    border: 2px solid #d3d3d3;
+    border-radius: 5px 15px 0px 0px;
+    border-bottom: none;
+    cursor: pointer;
+    order: 0;
+
+    &:hover {
+      color: black;
+    }
+  }
+
+  .tab-content {
+    display: none;
+    // padding: 10px 10px 0 10px;
+    width: 100%;
+    //border: 4px solid #F2F0EA;
+    background-color: #f2f0ea;
+    order: 1;
+    height: 77vh;
+    word-break: keep-all;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(232, 232, 232, 0.5) rgba(255, 255, 255, 0.5); // 滾動條顏色, 滑道顏色
+  }
+}
+
+// /* 父容器的樣式 */
+// .parent-container {
+//   font-family: Roboto, "Helvetica Neue", sans-serif;
+//   // font-family: Arial, sans-serif;
+//   text-align: center;
+//   display: flex;
+//   flex-direction: column;
+//   height: 100vh;
+// }
+
+// /* 文字樣式 */
+// h1 {
+//   margin: 20px 0;
+//   font-size: x-large;
+//   font-weight: bold;
+//   color: #444;
+// }
+
+// input[type="text"]::placeholder{
+//   font-weight: bold;
+//   font-family: Roboto, "Helvetica Neue", sans-serif;
+// }
+
+// /* 搜尋框和按鈕容器 */
+// input[type="text"],
+// .joinbutton {
+//   vertical-align: middle;
+//   /* 保證兩者垂直對齊 */
+// }
+
+// /* 修改輸入框樣式 */
+// input[type="text"] {
+//   width: 300px;
+//   border: 2px solid #f5c170;
+//   border-right: none;
+//   padding: 8px;
+//   height: 40px;
+//   /* 與按鈕高度保持一致 */
+//   border-radius: 5px 0 0 5px;
+//   outline: none;
+//   font-size: 16px;
+//   color: #333;
+//   transition: all 0.3s ease;
+//   box-sizing: border-box;
+//   /* 確保內邊距和邊框計算在內 */
+// }
+
+// input[type="text"]:focus {
+//   border-color: #f5c170;
+//   color: #f5c170;
+//   box-shadow: 0 0 5px #f5c170;
+// }
+
+// /* 加入按鈕樣式 */
+// .joinbutton {
+//   width: 50px;
+//   height: 40px;
+//   /* 與輸入框高度保持一致 */
+//   border: none;
+//   background: #f5c170;
+//   color: #fff;
+//   border-radius: 0 5px 5px 0;
+//   cursor: pointer;
+//   font-size: 18px;
+//   font-weight: bold;
+//   line-height: 40px;
+//   /* 確保文字垂直居中 */
+//   text-align: center;
+// }
+
+// .joinbutton:hover {
+//   background: #f18256;
+//   box-shadow: 0 2px 8px #f18256;
+// }
+
+// .journeyList {
+//   margin-top: 15px;
+//   height: 55vh;
+//   overflow: auto;
+// }
+
+// /* 行程列表樣式 */
+// .journey {
+//   display: flex;
+//   align-items: center;
+//   /* 垂直居中對齊 */
+//   justify-content: space-between;
+//   padding: 10px 20px;
+//   margin: 10px auto;
+//   width: 350px;
+//   /* 控制行程項目寬度 */
+//   height: 80px;
+//   position: relative;
+
+// }
+
+// /* 行程內容容器樣式 */
+// .journey-content {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   /* 水平居中對齊 */
+//   width: 100%;
+//   /* 讓內容寬度填滿行程項目 */
+//   height: 100%;
+//   background-color: #d8f3dc;
+//   border-radius: 15px;
+// }
+
+// /* 行程文字與圖標的樣式 */
+// .journey span {
+//   font-size: 24px;
+//   color: #555;
+//   flex: 1;
+//   /* 文字部分自適應寬度 */
+//   text-align: center;
+//   font-weight: bold;
+//   display: flex;
+//   /* 使用 flexbox 垂直居中對齊 */
+//   align-items: center;
+//   justify-content: center;
+//   overflow: hidden;
+//   /* 防止文字超出範圍 */
+//   margin-right: 20px;
+// }
+
+// /* arrow-forward icon 的樣式 */
+// .arrow-forward {
+//   color: #fefae0;
+//   font-size: 24px;
+//   /* 調整圖標大小以適應圓形 */
+//   position: absolute;
+//   /* 絕對定位 */
+//   top: 50%;
+//   /* 垂直居中 */
+//   left: 50%;
+//   /* 水平居中 */
+//   transform: translate(-50%, -50%);
+//   /* 修正居中偏移 */
+//   pointer-events: auto;
+//   /* 保證懸停時 .edit 可以點擊觸發事件但不會造成偏移 */
+// }
+
+// /*circle-icon 的樣式 */
+// .circle-icon {
+//   display: inline-flex;
+//   align-items: center;
+//   justify-content: center;
+//   width: 40px;
+//   height: 40px;
+//   margin-left: 10px;
+//   border-radius: 50%;
+//   /* 圓形 */
+//   background-color: #f5c170;
+//   position: relative;
+//   /* 設置為相對定位，為 .edit 提供參考框 */
+//   cursor: pointer;
+//   position: absolute;
+//   /* 絕對定位 */
+//   right: 30px;
+//   /* 固定在容器的右邊 */
+// }
+
+// .circle-icon:hover {
+//   background-color: #f18256;
+//   /* 懸停顏色 */
+// }
+
+// .addbutton {
+//   display: flex;
+// }
+
+// /*新增行程按鈕的樣式 */
+// .addJourney {
+//   cursor: pointer;
+//   display: flex;
+//   margin: auto;
+//   align-items: center;
+//   height: 100px;
+// }
+
+// /* 新增行程按鈕的樣式 */
+// .addJourney {
+//   margin: auto;
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+//   justify-content: center;
+//   /* 確保 icon 和文字在水平與垂直方向都居中 */
+//   font-weight: bold;
+//   border-radius: 15px;
+//   width: 200px;
+//   /* 控制行程項目寬度 */
+//   height: 50px;
+//   background-color: #f5c170;
+//   gap: 8px;
+//   /* icon 和文字間的間距 */
+// }
+
+// /* add-icon 的樣式 */
+// .add {
+//   font-weight: 900;
+//   font-size: 26px;
+//   /* 調整圖標大小與文字匹配 */
+//   color: #fefae0;
+//   /* 圖標顏色 */
+//   display: flex;
+//   /* 確保 flex 排列內部項目 */
+//   align-items: center;
+//   /* 垂直方向居中 */
+//   justify-content: center;
+//   /* 水平方向居中 */
+//   line-height: 1;
+//   /* 避免內部多餘的行高影響 */
+// }
+
+// /*button內文字的樣式 */
+// .addJourney span {
+//   font-weight: 900;
+//   display: flex;
+//   /* 防止 mat-icon 類的內部樣式影響對齊 */
+//   line-height: 50px;
+//   align-items: center;
+//   font-size: 24px !important;
+//   font-weight: bold;
+// }
+.parent-container {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 100vh;
+  margin-top: 2mm;
+}
+
+.myJourneyTitle {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+//邀請碼
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 300px;
+}
+
+.invitationbox {
+  display: flex;
+}
+
+.invitationInput {
+  border: none;
+  border-bottom: 2px solid #a7a6a6;
+  outline: none;
+  font-size: 16px;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px 40px 5px 10px;
+}
+
+.invitationInput::placeholder {
+  font-weight: bold;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.invitationInput:focus {
+  border-bottom: 2px solid #555;
+  background-color: white;
+}
+
+.enter-icon {
+  position: absolute;
+  right: 10px;
+  color: #a7a6a6;
+  font-size: 22px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.enter-icon:hover {
+  color: #555;
+}
+
+//行程列表
+.journeyList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // justify-content: space-between;
+  gap: 25px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px 0;
+  height: 67%; ///////////////////////////////////要調整
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.journey-content {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 10px 20px;
+  // border: 3px solid $yellow;
+  border-radius: 20px;
+  background-color: #f6f3eb;
+  min-height: 56px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.share-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $yellow;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.circle-icon .fa-file-lines {
+  color: #616060;
+  font-size: 18px;
+}
+
+.circle-icon.disabled {
+  color: #e4e2e2;
+  cursor: not-allowed !important;
+}
+
+.journey-name {
+  flex: 1;
+  font-size: 18px;
+  font-weight: bold;
+  color: #555;
+  cursor: pointer;
+  text-align: center;
+}
+
+.circle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: #616060 2px solid;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  // box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.circle-icon:hover {
+  background-color: rgb(243, 240, 240);
+  // box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.circle-icon .fa-arrow-right {
+  color: #616060;
+  font-size: 18px;
+}
+
+//建立新行程
+.addbutton {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+}
+
+/* 新增行程按鈕的樣式 */
+.addJourney {
+  cursor: pointer;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  /* 確保 icon 和文字在水平與垂直方向都居中 */
+  font-weight: bold;
+  border-radius: 15px;
+  width: 200px;
+  /* 控制行程項目寬度 */
+  height: 50px;
+  background-color: #f5c170;
+  gap: 8px;
+  /* icon 和文字間的間距 */
+}
+
+/* add-icon 的樣式 */
+.add {
+  font-weight: 900;
+  font-size: 26px;
+  /* 調整圖標大小與文字匹配 */
+  color: #fefae0;
+  /* 圖標顏色 */
+  display: flex;
+  /* 確保 flex 排列內部項目 */
+  align-items: center;
+  /* 垂直方向居中 */
+  justify-content: center;
+  /* 水平方向居中 */
+  line-height: 1;
+  /* 避免內部多餘的行高影響 */
+}
+
+/*button內文字的樣式 */
+.addJourney span {
+  font-weight: 900;
+  display: flex;
+  /* 防止 mat-icon 類的內部樣式影響對齊 */
+  line-height: 50px;
+  align-items: center;
+  font-size: 24px !important;
+  font-weight: bold;
+}
+
+// .joinbutton {
+//   background-color: $yellow;
+//   color: #fff;
+//   border: none;
+//   border-radius: 20px;
+//   padding: 10px 20px;
+//   font-size: 14px;
+//   cursor: pointer;
+//   transition: background-color 0.3s ease;
+// }
+
+// .joinbutton:hover {
+//   background-color: #0056b3;
+// }
+
+// .joinbutton:active {
+//   background-color: #003f7f;
+// }
+
+//////////////////////////////////////////
+.background {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+//////上面的按鈕
+.icons {
+  // position: absolute;
+  // top: 0;
+  // left: 0;
+  width: 100%;
+  background-color: $yellow;
+  // border-radius: 20px 0 0 0;
+  font-size: large;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  /* 將內容物分散到左右兩邊 */
+}
+
+.button {
+  width: 45px;
+  height: 31px;
+  outline: none;
+  color: #444;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: color.adjust($yellow, $lightness: -15%);
+  }
+
+  &:active {
+    background-color: #e4ae56;
+  }
+}
+
+.hide {
+  visibility: hidden;
+  /* 隱藏內容，但保留容器 */
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  /* 防止內容溢出 */
+}
+
+.leftbuttons {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+}
+
+.title {
+  padding: 6mm 4mm;
+  width: 100%;
+  text-align: center;
+  font-size: 23px;
+  font-weight: bolder;
+}
+
+.titledate {
+  margin-top: 1mm;
+  font-size: 14px;
+  letter-spacing: 0.2rem;
+}

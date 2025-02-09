@@ -1,0 +1,96 @@
+<div class="hotel">
+
+  @for (item of hotelData; track $index) {
+    <div class="hotelList">
+      <div style="width: 240px; height: 240px; max-height: 240px; max-width: 240px;">
+        <img [src]="item.img" alt="圖片" class="img-thumbnail" style=" width: 240px; height: 240px; border: none; background-color: transparent;">
+      </div>
+
+      <div style="margin-left: 15px; margin-right: 10px;  flex: 1;">
+        <table>
+          <tr>
+            <td class="tdLable">
+              <label style="font-weight: bold;">房型：</label>
+            </td>
+            <td>{{item.roomType}}</td>
+          </tr>
+          <tr>
+            <td class="tdLable">
+              <label style="font-weight: bold;">床型：</label>
+            </td>
+            <td>
+              @for (bedTypeItem of item.bedType; track $index) {
+                  {{bedTypeItem}}<br>
+              }
+            </td>
+          </tr>
+          <tr>
+            <td class="tdLable">
+              <label style="font-weight: bold;">每晚價格：</label>
+            </td>
+            <td>
+              {{item.currency}}&nbsp;{{ item.oneNightPrice | number:'1.0-0' }}
+            </td>
+          <tr>
+            <td class="tdLable">
+              <label style="font-weight: bold;">總價：</label>
+            </td>
+            <td>
+              {{item.currency}}&nbsp;{{ item.allPrice | number:'1.0-0' }}
+            </td>
+          </tr>
+          <tr>
+            <td class="tdLable">
+              <label style="font-weight: bold;">預定須知：</label>
+            </td>
+            <td>
+              @for (notificatioItem of item.notificationList; track $index) {
+                  {{notificatioItem}}<br>
+              }
+            </td>
+          </tr>
+        </table>
+
+        @if (item.hightFloor){
+          <div class="hotelListItem" style="display: flex; align-items: center;">
+            <span class="material-symbols-outlined">arrow_upward</span>
+            高樓層
+          </div>
+        }
+        @if (item.infantBed != null){
+          <div class="hotelListItem" style="display: flex; align-items: center;">
+            <span class="material-symbols-outlined">pediatrics</span>
+            {{item.infantBed}}
+          </div>
+        }
+      </div>
+
+      <div style="align-self: flex-start;">
+        <div class="adjust_num">
+          <button mat-icon-button (click)="subOne(item)">
+            <span class="material-symbols-outlined">do_not_disturb_on</span>
+          </button>
+          <input class="input_no" type="text" [(ngModel)]="item.number" readonly>
+          <span style="font-weight: bold; font-size: 18px;">間</span>
+          <button mat-icon-button (click)="addOne(item)" style="margin-right: 10px;">
+            <span class="material-symbols-outlined">add_circle</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+  <!-- 68% -->
+  <div style="position: fixed; bottom:7% ;left: 62%;">
+    <button (click)="close(false)" style="background-color: #929090; border: 2px solid #929090; border-radius: 5px; height: 35px; width: 60px; margin: 5px;" >
+      取消
+    </button>
+    <button (click)="clear()" style="background-color: #fafafa; border: 2px solid #f5c170; border-radius: 5px; height: 35px; width: 60px;margin: 5px;" >
+      重置
+    </button>
+    <button (click)="check()" style="background-color: #f5c170; border: 2px solid #f5c170; border-radius: 5px; height: 35px; width: 60px;margin: 5px;" >
+      儲存
+    </button>
+  </div>
+</div>
+
+

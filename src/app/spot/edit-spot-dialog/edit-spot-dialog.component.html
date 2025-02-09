@@ -1,0 +1,116 @@
+<div class="overlay"></div>
+<div class="background">
+  <h2 mat-dialog-title class="title">{{ data.spot.spotName }}</h2>
+
+  <div class="container">
+    <!-- 地點名稱 -->
+    <div class="field">
+      <span>地點名稱</span>
+      <input
+        type="text"
+        class="name"
+        [(ngModel)]="data.spot.spotName"
+        required
+        maxlength="20"
+      />
+    </div>
+
+    <div class="time-fields">
+      <!-- 抵達時間 (系統時間，不能更改) -->
+      <div class="field">
+        <span>抵達時間</span>
+        <input
+          type="time"
+          class="arrival-time"
+          [(ngModel)]="data.spot.arrivalTime"
+          [disabled]="data.spot.spotId != 1"
+          (focus)="openTimePicker($event)"
+          (ngModelChange)="onArrivalTimeChange()"
+        />
+      </div>
+
+      <!-- 離開時間 (系統計算，不能更改) -->
+      <div class="field">
+        <span>離開時間</span>
+        <input
+          type="text"
+          class="departure-time"
+          [value]="departureTime"
+          disabled
+        />
+      </div>
+    </div>
+
+    <!-- 停留時間 -->
+    <div class="field">
+      <span>停留時間</span>
+      <div class="field-stay-time">
+        <select
+          id="hours"
+          name="hours"
+          [(ngModel)]="hour"
+          (ngModelChange)="onStayTimeChange()"
+        >
+          <option name="hours" value="">小時</option>
+          <!-- 加個 for 迴圈跑小時 => 小時跟分鐘用@for吃不到值 -->
+          <!-- @for(hour of hoursList; track $index){
+          <option name="hours" value="hour">{{ hour }}</option>
+          } -->
+          <option name="hours" value="00">00</option>
+          <option name="hours" value="01" selected>01</option>
+          <option name="hours" value="02">02</option>
+          <option name="hours" value="03">03</option>
+          <option name="hours" value="04">04</option>
+          <option name="hours" value="05">05</option>
+          <option name="hours" value="06">06</option>
+          <option name="hours" value="07">07</option>
+          <option name="hours" value="08">08</option>
+          <option name="hours" value="09">09</option>
+          <option name="hours" value="10">10</option>
+          <option name="hours" value="11">11</option>
+          <option name="hours" value="12">12</option>
+          <option name="hours" value="13">13</option>
+          <option name="hours" value="14">14</option>
+          <option name="hours" value="15">15</option>
+          <option name="hours" value="16">16</option>
+          <option name="hours" value="17">17</option>
+          <option name="hours" value="18">18</option>
+          <option name="hours" value="19">19</option>
+          <option name="hours" value="20">20</option>
+          <option name="hours" value="21">21</option>
+          <option name="hours" value="22">22</option>
+          <option name="hours" value="23">23</option>
+        </select>
+        <select
+          id="minutes"
+          name="minutes"
+          [(ngModel)]="minute"
+          (ngModelChange)="onStayTimeChange()"
+        >
+          <option name="minutes" value="">分鐘</option>
+          <option name="minutes" value="00" selected>00</option>
+          <option name="minutes" value="15">15</option>
+          <option name="minutes" value="30">30</option>
+          <option name="minutes" value="45">45</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 筆記 -->
+    <div class="field">
+      <span>筆記</span>
+      <textarea
+        class="note"
+        placeholder="請輸入筆記"
+        rows="3"
+        maxlength="100"
+        [(ngModel)]="data.spot.note"
+      ></textarea>
+    </div>
+
+    <div class="button-group">
+      <button class="cancel-button" (click)="cancel()">取消</button>
+      <button class="next-button" (click)="saveSpot()">儲存</button>
+    </div>
+  </div>
+</div>

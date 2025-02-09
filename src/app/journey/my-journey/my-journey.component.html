@@ -1,0 +1,138 @@
+<!-- 原本頁面-->
+@if(!switchToSpot){
+<div class="icons" style="flex-direction: row-reverse;" [ngClass]="{ hide: myJourney == 0 }">
+  <div class="button" (click)="closeMyJourney()">
+    <i class="fas fa-times"></i>
+  </div>
+</div>
+
+<div class="parent-container">
+  <div class="myJourneyTitle">{{userName||'我'}}的行程</div>
+  <!-- 輸入邀請碼 -->
+  <div class="invitationbox">
+    <div class="input-wrapper">
+      <input type="text" placeholder="請輸入邀請碼" [(ngModel)]="invitation" (keydown.enter)="joinJourney(invitation)"
+        class="invitationInput" />
+      <i class="fa-solid fa-paper-plane enter-icon" (click)="joinJourney(invitation)"></i>
+    </div>
+  </div>
+
+
+  <!-- 行程列表 -->
+
+  <!-- 已登入-->
+  @if(this.journeyList && this.journeyList.length !== 0){
+  <div class="journeyList">
+    @for(journey of this.journeyList;track journey){
+    <div class="journey-content">
+
+      <!-- 行程名稱 -->
+      <div class="journey-name" (click)="getSpotAndRoute(journey.journeyId, journey.journeyName)">
+        {{ journey.journeyName }}
+      </div>
+
+      <!-- 發佈貼文按鈕 -->
+      <div class="circle-icon" [class.disabled]="journey.endDate >= this.dateFormat.changeDateFormat(this.today)"
+        [matTooltip]="journey.endDate < this.dateFormat.changeDateFormat(this.today) ? '發佈貼文' : '行程結束後才能發佈貼文喔!'"
+        matTooltipPosition="left"
+        (click)="journey.endDate < this.dateFormat.changeDateFormat(this.today) ? goCreatePost(journey.journeyId) : null">
+        <!-- <i class="fa-brands fa-creative-commons-share"></i> -->
+        <i class="fa-regular fa-file-lines"></i>
+      </div>
+
+      <!-- 箭頭圖標 -->
+      <div class="circle-icon" (click)="getSpotAndRoute(journey.journeyId, journey.journeyName)">
+        <i class="fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    }
+  </div>
+  } @else {
+  <!-- 未登入或沒有行程-->
+  <!-- <img
+      style="height: 200px; width: 200; margin-top: 20px"
+      src="https://megapx-assets.dcard.tw/images/eb6038c7-907c-430d-8370-f093721c1d8b/640.webp"
+    /> -->
+  <img style="height: 200px; width: 200; margin-top: 20px" src="assets/Goose_Rest.jpeg" />
+  <!-- <p style="font-size: 20px; font-weight: bold">目前無行程，請新增行程</p> -->
+  }
+
+
+  <div class="addJourney" (click)="addNewJourney()">
+    <mat-icon class="add">add</mat-icon>
+    <span>建立新行程</span>
+  </div>
+
+
+</div>
+
+
+<!-- 點擊行程icon後的頁面-->
+} @if(switchToSpot){
+<div class="background">
+  <div class="icons" [ngClass]="{ hide: myJourney == 0 }">
+    <div class="leftbuttons">
+      <div class="button" (click)="SwitchComponent()" [matTooltip]="'返回行程列表'" matTooltipPosition="above">
+        <mat-icon>arrow_back</mat-icon>
+      </div>
+      <div class="button" (click)="reviseJourney()" [matTooltip]="'更新行程'" matTooltipPosition="above">
+        <i class="fa-solid fa-pencil"></i>
+      </div>
+      <div class="button" (click)="exportPDF()" [matTooltip]="'匯出PDF'" matTooltipPosition="above">
+        <i class="fa-solid fa-file"></i>
+      </div>
+    </div>
+
+    <div class="button" [matTooltip]="'關閉'" (click)="closeMyJourney()">
+      <i class="fas fa-times"></i>
+    </div>
+  </div>
+
+  <div class="title">
+    <span>{{ title }}</span>
+    <div class="titledate">{{dateFormat.formatDateRange(journey.startDate,journey.endDate)}}</div>
+  </div>
+
+
+  <div class="tabs">
+    <!--   tab group -->
+    <input type="radio" id="tab-1" name="tab" [checked]="selectedTab === 'tab-1'" />
+    <label for="tab-1" style="margin-left: 5px" (click)="changeTab('tab-1')">行程簡介</label>
+    <!-- 行程簡介 -->
+    <div class="tab-content">
+      <app-spot [journey]="journey"></app-spot>
+    </div>
+    <!--   tab group end -->
+
+
+    <!--   tab group -->
+    <input type="radio" name="tab" id="tab-2" [checked]="selectedTab === 'tab-2'" />
+    <label for="tab-2" (click)="changeTab('tab-2')">住宿搜尋</label>
+    <!-- 住宿搜尋 -->
+    <div class="tab-content">
+      <app-hotel-search [journey]="journey"></app-hotel-search>
+    </div>
+    <!--   tab group end -->
+
+
+    <!--   tab group -->
+    <input type="radio" name="tab" id="tab-3" [checked]="selectedTab === 'tab-3'" />
+    <label for="tab-3" (click)="changeTab('tab-3')">住宿資訊</label>
+    <!-- 住宿資訊 -->
+    <div class="tab-content">
+      <app-hotel-data [journey]="journey"></app-hotel-data>
+    </div>
+    <!--   tab group end -->
+
+
+    <!--   tab group -->
+    <input type="radio" name="tab" id="tab-4" [checked]="selectedTab === 'tab-4'" />
+    <label for="tab-4" (click)="changeTab('tab-4')">共同編輯</label>
+    <!-- 共同編輯 -->
+    <div class="tab-content">
+      <app-collaborator [journey]="journey"></app-collaborator>
+    </div>
+    <!--   tab group end -->
+  </div>
+</div>
+}

@@ -1,0 +1,150 @@
+<!-- 引入 Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+<div class="overlay"></div>
+<div class="background">
+
+  <div style="position: sticky; top: 5px; left: 100%; margin-right: 1px; z-index: 20; text-align: right; width: 20px; height: 5px;">
+    <i class="fas fa-times" style="color: #515050; font-size: x-large; cursor: pointer;" (click)="close()"></i>
+  </div>
+
+  <div class="bottom">
+    <div class="left-bottom">
+      <div class="name">{{place.name}}</div>
+
+      <div class="rate">
+        <div>GOOGLE評論</div>
+        @if(place.rating && place.user_ratings_total){
+          <div style="display: flex; align-items: center;">
+            <!-- 星星 -->
+            <div id="stars-contener">
+              {{place.rating}}
+              <!-- 使用 ngFor 生成星星 -->
+              <span *ngFor="let star of [].constructor(Math.floor(place.rating))" class="star">★</span>
+              <!-- 判斷是否有半星 -->
+              <span *ngIf="place.rating % 1 !== 0" class="star">☆</span>
+              <!-- 空星補齊到 5 顆 -->
+              <span *ngFor="let star of [].constructor(5 - Math.ceil(place.rating))" class="star">☆</span>
+            </div>
+            <div style="font-size: small; color: #515050; margin-left: 3px;">{{place.user_ratings_total}}人評論</div>
+          </div>
+        }@else{
+          尚無評價
+        }
+      </div>
+
+      <div class="info">
+        <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+        @if(place.formatted_address){
+          {{place.formatted_address}}
+        }@else {無地址資訊}
+      </div>
+
+      <div class="info">
+        <div class="icon"><i class="fas fa-phone-alt"></i></div>
+        @if(place.formatted_phone_number){
+          {{place.formatted_phone_number}}
+        }@else {無電話資料}
+      </div>
+
+      <div class="info">
+        <div class="icon"><i class="fas fa-link"></i></div>
+        @if(place.website){
+          <a [href]="place.website">網站連結</a>
+        }@else {無網站資訊}
+      </div>
+
+      <div class="info">
+        <div class="icon"><i class="fas fa-clock"></i></div>
+        營業時間
+      </div>
+
+      <div class="opening">
+        @if(place.opening_hours){
+          <div class="panel">
+            <mat-accordion >
+              <mat-expansion-panel  (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)" hideToggle="true" >
+                <mat-expansion-panel-header style="background-color: #f6f3eb; border-radius: 0;  box-shadow: none;">
+                  <mat-panel-title style="font-weight: bold; color: rgb(231 91 91); "> {{place.opening_hours.isOpen()?'營業中':'休息中'}} </mat-panel-title>
+                  <mat-panel-description  style="font-weight: bold; color: #515050;  margin-left: auto; white-space: nowrap;  flex-grow: 0;">
+                    {{panelOpenState() ? '關閉' : '詳情'}}
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                  @for (item of place.opening_hours.weekday_text; track $index) {
+                    <div style="margin-bottom: 5px;">{{item}}</div>
+                  }
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+            <!-- @for (item of place.opening_hours.weekday_text; track $index) {
+              <div style="margin-bottom: 5px;">{{item}}</div>
+            } -->
+        }@else{ <div style="margin-left: 10px;">無營業資訊</div> }
+      </div>
+
+    </div>
+
+
+
+    <div class="right-bottom">
+      <!-- 放圖片 -->
+      <div class="bigphoto">
+        @if(place.photos){ <img class="choosephoto" [src]="choosephoto">}
+        @else {尚無圖片}
+      </div>
+
+      <div class="photos">
+      @for (item of place.photos; track $index) {
+        <img class="photo" [src]="item.getUrl({ maxWidth: 80, maxHeight: 60 })" (click)="bigphoto(item.getUrl({ maxWidth: 400, maxHeight: 250 }))" [class.selected]="choosephoto == item.getUrl({ maxWidth:400, maxHeight:250})">
+      }
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 精選圖片 -->
+  <div class="info">
+    <div class="icon"><i class="fas fa-comment"></i></div>
+    精選評論
+  </div>
+
+    @if(place.reviews){
+      <div class="all-reviews">
+      @for (item of place.reviews; track $index) {
+        <div class="reviews">
+          <div class="author_name">{{item.author_name}}</div>
+          <div class="rating">
+            <div id="stars-contener">
+              @if(item.rating){
+                <!-- 使用 ngFor 生成星星 -->
+                <span *ngFor="let star of [].constructor(Math.floor(item.rating))" class="star">★</span>
+                <!-- 判斷是否有半星 -->
+                <span *ngIf="item.rating % 1 !== 0" class="star">☆</span>
+                <!-- 空星補齊到 5 顆 -->
+                <span *ngFor="let star of [].constructor(5 - Math.ceil(item.rating))" class="star">☆</span>
+              }
+            </div>
+            <div class="time">{{item.relative_time_description}}</div>
+          </div>
+          <div class="text" >{{item.text}}</div>
+        </div>
+        <div class="divider"></div>
+      }
+    </div>
+    }@else {<div style="font-weight: bold;margin-left: 60px; color: #808080;">尚無評論</div>}
+
+
+
+  <div class="buttongroup">
+    <div class="button heart" [matTooltip]="'我的最愛'" matTooltipPosition="above"
+    (click)="addToFavorites()"><i class="fas fa-heart" style="font-size: 1.5rem;" [ngClass]="{'love': isFavorite}"></i></div>
+    @if(place.types?.includes('lodging')){
+      <div class="button home" [matTooltip]="'住宿搜尋'" matTooltipPosition="above"
+      (click)="goLodging()"><i class="fas fa-home" style="font-size: 1.5rem;"></i></div>
+    }
+    <div class="button plus" [matTooltip]="'加入行程'" matTooltipPosition="above"
+    (click)="addToJourney()"><i class="fas fa-plus" style="font-size: 1.8rem; font-weight: bold;"></i></div>
+    <!-- <div class="button share" data-tooltip="分享到聊天室" (click)="shareToChat()"><i class="fas fa-share" style="font-size: 1.7rem;"></i></div> -->
+  </div>
+
+</div>

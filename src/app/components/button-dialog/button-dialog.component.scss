@@ -1,0 +1,74 @@
+@use "sass:color";
+$back: #f6f3eb;
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: 40px;
+  width: 100%;
+  border: 0px 10px 0px;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 20px;
+  font-weight: bold;
+  white-space: pre-line; // 換行
+  margin-top: 10px;
+  line-height: 1.8;
+  padding: 0 10px;
+}
+
+.buttongroup {
+  gap: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $back;
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+
+  &.cancelbut {
+    background-color: #808080;
+    color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      background-color: color.adjust(#808080, $lightness: -5%);
+    }
+
+    &:active {
+      background-color: #999;
+      transform: translateY(1.5px);
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  &.confirmbut {
+    background-color: #febc53;
+    color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      background-color: color.adjust(#febc53, $lightness: -5%);
+    }
+
+    &:active {
+      background-color: #febc53;
+      transform: translateY(1.5px);
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+}

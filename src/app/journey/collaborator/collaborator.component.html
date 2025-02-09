@@ -1,0 +1,19 @@
+<div
+  style="display: flex; flex-direction: column; gap: 15px; align-items: center; padding: 15px 10px; height: 90%; overflow-y: auto;">
+  @if(list!=null && list.length > 0){
+  @if(list[0].invitation){
+  <div class="invitation">
+    <div style="font-size: 20px; color: #555;">邀請碼：{{list[0].invitation}}</div>
+  </div>
+  }
+  <div style="display: flex; flex-direction: column; gap: 15px;">
+    @for (item of list; track $index) {
+    <div class="user">
+      <img [src]="item.userImage" class="img">
+      <div class="username">{{item.userName}}</div>
+      <button (click)="leave(item.userMail,item.userName)" class="button">退出</button>
+    </div>
+    }
+  </div>
+  }
+</div>

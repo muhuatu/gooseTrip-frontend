@@ -1,0 +1,80 @@
+<!-- 這是首頁 -->
+<div class="back">
+  <!-- 去哪鵝 -->
+  <div class="title">去哪鵝</div>
+
+  <!-- 搜尋框 -->
+  <div class="searchbox">
+    <i class="fas fa-search icon"></i>
+    <input class="search" type="text" [(ngModel)]="searchName" placeholder="輸入關鍵字，如：台東景點" (focus)="showSearchOptions()"
+      (blur)="hideSearchOptions()" (keydown.enter)="onEnter()" />
+    <button (click)="getSearchdata()" class="searchbutton">搜尋</button>
+  </div>
+
+  <!-- 搜尋條件 -->
+  @if(searchOptions){
+  <div class="searchoptions">
+    <!-- 搜尋紀錄 -->
+    @if(searchHistory.length){
+    <div class="search-history">
+      <!-- 搜尋紀錄的文字 + 垃圾桶 -->
+      <div style="display: flex; flex-direction: row; ">
+        <h3>搜尋紀錄</h3>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+        <div>
+          <button (click)="clearSearchHistory($event)" (mousedown)="$event.preventDefault()" class="clear-history">
+            <span class="material-symbols-outlined"> delete </span>
+          </button>
+        </div>
+      </div>
+
+      <div class="tag-list">
+        @for(history of searchHistory; track $index){
+        <button class="tag-btn" (click)="getSearchdata(history, $event)" (mousedown)="$event.preventDefault()">
+          {{ history }}
+        </button>
+        }
+      </div>
+    </div>
+    }
+
+    <!-- 熱門搜尋 -->
+    <!-- <div class="popular-searches">
+      <h3>熱門搜尋</h3>
+      <div class="tag-list">
+        @for(search of popularSearches; track $index){
+        <button class="tag-btn" (click)="getSearchdata(search, $event)" (mousedown)="$event.preventDefault()">
+          {{ search }}
+        </button>
+        }
+      </div>
+    </div> -->
+
+    <!-- 熱門目的地 -->
+    <div class="popular-destinations">
+      <h3>熱門目的地</h3>
+      <div class="destination-grid">
+        @for(destination of popularDestinations; track $index){
+        <div class="destination-card" (click)="getSearchdata(destination, $event)"
+          (mousedown)="$event.preventDefault()">
+          <img [src]="getDestinationImage(destination)" alt="{{ destination }}" />
+          <p>{{ destination }}</p>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+  }
+
+  <!-- 熱門城市 -->
+  <div class="hot-spot-container">
+    @for(s of spots; track $index){
+    <div class="spot-card" [style.backgroundImage]="'url(' + s.image + ')'" (click)="getSearchdata(s.searchName)"
+      (mousedown)="$event.preventDefault()">
+      <p class="spot-name">{{ s.name }}</p>
+    </div>
+    }
+  </div>
+
+  <router-outlet></router-outlet>
+</div>

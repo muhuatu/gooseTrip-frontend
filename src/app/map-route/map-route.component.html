@@ -1,0 +1,99 @@
+<mat-sidenav-container>
+  <mat-sidenav
+    #sideNav
+    mode="side"
+    [opened]="true"
+    position="end"
+    style="color: #f2e9eb"
+  >
+    <!-- 在 mat-sidenav 上添加顯示切換圖示 -->
+    <!-- <i class="material-icons" (click)="sideNav.toggle()" style="margin: 0"
+      >menu_open</i
+    > -->
+    <h5
+      style="display: flex; justify-content: center; margin-top: 20px"
+      class="maph5"
+    >
+      交通方式
+    </h5>
+
+    <!-- 交通方式切換 -->
+    <div class="transportation-switch">
+      <div class="transportation">
+        <i class="material-icons" (click)="setTravelMode('DRIVING')"
+          >directions_car</i
+        >
+        <span class="span-icon">{{ travelTimes["DRIVING"] }}</span>
+      </div>
+      <div class="transportation">
+        <i class="material-icons" (click)="setTravelMode('WALKING')"
+          >directions_walk</i
+        >
+        <span class="span-icon">{{ travelTimes["WALKING"] }}</span>
+      </div>
+      <div class="transportation">
+        <i class="material-icons" (click)="setTravelMode('TRANSIT')"
+          >directions_bus</i
+        >
+        <span class="span-icon">{{ travelTimes["TRANSIT"] }}</span>
+      </div>
+      <div class="transportation">
+        <i class="material-icons" (click)="setTravelMode('BICYCLING')"
+          >pedal_bike</i
+        >
+        <span class="span-icon">{{ travelTimes["BICYCLING"] }}</span>
+      </div>
+    </div>
+
+    <!-- 路線輸入區 -->
+    <div class="route-input-container">
+      <div class="route-input">
+        <i class="material-icons route-icon">place</i>
+        <input
+          type="text"
+          class="route-field"
+          placeholder="輸入起點"
+          [(ngModel)]="start"
+          (ngModelChange)="onInputChange()"
+        />
+      </div>
+
+      <div class="route-input">
+        <i class="material-icons route-icon">flag</i>
+        <input
+          type="text"
+          class="route-field"
+          placeholder="輸入終點"
+          [(ngModel)]="end"
+          (ngModelChange)="onInputChange()"
+        />
+      </div>
+    </div>
+    <!-- 顯示路線資訊 -->
+    <!-- <i
+      class="material-icons"
+      (click)="toggleRouteInfo()"
+      style="cursor: pointer; margin-left: 10px"
+      >expand_more</i
+    > -->
+    <div
+      id="directions-panel"
+      style="
+        flex: 1;
+        overflow-y: auto;
+        background: white;
+        position: relative;
+        z-index: 1;
+      "
+    ></div>
+    <div class="buttondiv">
+      <button (click)="saveRoute()" class="mapbutton">儲存</button>
+    </div>
+  </mat-sidenav>
+
+  <!-- google 地圖 -->
+  <mat-sidenav-content>
+    <div #map id="map" class="map-container"></div>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,101 @@
+<!-- 貼文區 -->
+<div class="post-section">
+
+  <!-- 貼文內容 -->
+  <div class="post-content">
+
+    <div class="authorAndIcon">
+      <!-- 作者區 -->
+      <div class="author-info">
+        <img [src]="userImage" alt="作者頭像" class="avatar" />
+        <div class="author-details">
+          <h2>{{ userName }}</h2>
+          <div class="post">
+            <p>{{ formatDate() }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="icon-send">
+        <span class="material-icons" matTooltip="發佈貼文" (click)="createPost()">send</span>
+      </div>
+    </div>
+
+    <hr /> <!-- 分隔線 -->
+
+  </div>
+
+  <!-- 貼文內容 -->
+  <div class="header">
+    <h1>{{ journeyName }}</h1>
+  </div>
+  <div class="post-text">
+    <textarea type="text" [(ngModel)]="postContent" maxlength="500"></textarea>
+  </div>
+  <!-- 地圖 -->
+  <div class="map" style="width: 97.5%; margin-left: 1rem; margin-bottom: 1rem;">
+    <mat-accordion>
+      <mat-expansion-panel expanded="true" (opened)="panelOpenState.set(false)" (closed)="panelOpenState.set(true)"
+        style="box-shadow: none; background-color: #f2f0ea;">
+        <mat-expansion-panel-header>
+          <!-- <mat-panel-title></mat-panel-title> -->
+          <mat-panel-description style="font-weight: bold; color: #555;">
+            {{panelOpenState() ? '顯示地圖' : '隱藏地圖'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div id="map" style="height: 450px"></div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <!-- TAB區: 每日景點 -->
+  <mat-tab-group class="my-custom-tabs" (selectedTabChange)="onTabChanged($event);" dynamicHeight>
+    @for(tab of tabs; track $index){
+    <mat-tab [label]="tab.label">
+      <div class="tab-content">
+        @for(spot of tab.spots; track $index){
+        <div class="spot-info">
+          <!-- 視窗滾動會抓取的id -->
+          <div class="spot" id="{{ spot.spotName }}">
+            <h4>{{ spot.spotName }}</h4>
+            <!-- <p>{{ spot.spotNote }}</p> -->
+            <textarea [(ngModel)]="spot.spotNote" maxlength="500"></textarea>
+            <div style="display: flex; flex-direction: row; gap: 5px; margin: 0 0 0 1%;">
+              <i class="fa-solid fa-clock" style="margin-top: 2px;"></i>
+              <p style="font-size: 14px; margin: 0;">停留時間：{{ spot.duration }} 小時</p>
+            </div>
+          </div>
+          <div class="upload-file">
+            @if (spot.spotImage) {
+              <img [src]="spot.spotImage" alt="預覽圖片" style=" max-width: 400px;" />
+            }
+            @else{
+              <div style="width: 400px; height: 280px; border: 2px black solid; font-size: 20px; color: #555; font-weight: bold; display: flex; align-items: center; justify-content: center;">
+                照片預覽區
+              </div>
+            }
+
+            <!-- <div
+              style="background-image: url({{spot.spotImage}}); background-size: cover; background-repeat: no-repeat;">
+            </div> -->
+            <!-- } -->
+            <div style="display: flex;">
+              <div class="file-button" style="margin-right: 1%;">
+                <button (click)="emptyImg(spot)" class="clearImg">清除照片</button>
+              </div>
+              <div class="file-container">
+                <input id="{{spot.spotName}}" type="file" (change)="onFileSelected($event, spot)" accept="image/*" />
+                <label for="{{spot.spotName}}" class="file-label">選擇檔案</label>
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+        <hr /> <!-- 每個景點之間用分隔線 -->
+        }
+      </div>
+    </mat-tab>
+    }
+  </mat-tab-group>
+</div>
+

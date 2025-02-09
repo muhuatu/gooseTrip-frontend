@@ -1,0 +1,90 @@
+<div style="margin: 0px; overflow-y: hidden; height: 100%;">
+  @if (loading){
+    <div class="overlay"></div>
+    <div class="loading">
+      <img src="assets\home\duckck.gif">
+      <p class="lo">請稍後...</p>
+    </div>
+    <!-- <div style="top: 0; bottom: 0; left: 0; right: 0; position: absolute; z-index: 1000; backdrop-filter: blur(2px);"></div>
+    <mat-spinner style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 1005;"></mat-spinner> -->
+  }
+  <div style="position: sticky; top: 2%; left: 100%; margin-right: 15px; z-index: 1005; text-align: right; width: 20px; height: 5px;">
+    <i class="fas fa-times" style="color: #515050; font-size: x-large; cursor: pointer;" (click)="close()"></i>
+  </div>
+  <div class="tab">
+     @for (tab of tabs; track $index) {
+      <button [class.active]="activeTab === tab.name" (click)="openWeb(tab.name)"  class="tablinks">
+        {{ tab.name }}
+      </button>
+     }
+  </div>
+
+   @for (tab of tabs; track $index) {
+
+    <div class="inner" [id]="tab.name" [class.tabcontent]="true" [style.display]="activeTab === tab.name ? 'block' : 'none'">
+      <div class="search">
+        <select class="select" [(ngModel)]="sortChoice">
+          <option value="">排序標準</option>
+          @for (item of sort; track $index) {
+            <option [value]="item">{{item}}</option>
+          }
+        </select>
+
+        <!-- <input [(ngModel)]="selectName" type="text" placeholder="你要住哪鵝?" style="border: none; border-radius: 5px;  width: 30%; margin: 1%; padding: 5px; height: 35px; width: 150px;"> -->
+
+        <button (click)="search()" style="background-color: white; border: none; border-radius: 5px; padding: 5px; height: 35px ; width: 45px; font-size: 14px; margin-top: 1%;">
+          搜尋
+        </button>
+        @if(tab.allData){
+          <button (click)="updata(tab.name)" mat-icon-button class="custom-button">
+            顯示更多
+            <span class="material-symbols-outlined">web_traffic</span>
+
+          </button>
+        }
+        @else {
+          <p style="display: inline-block;word-wrap: break-word; height: 50px;margin-top: 10px; padding-top: 5px; margin-bottom: 5px;padding-left: 5px;">僅顯示前20筆</p>
+        }
+      </div>
+      <div class="hotel">
+        @if (showData.length == 0 ){
+
+            <div class="overlay"></div>
+            <div class="loading">
+              <img src="assets\home\duckck.gif">
+              <p class="lo">請稍後...</p>
+            </div>
+            <!-- <div style="top: 0; bottom: 0; left: 0; right: 0; position: absolute; z-index: 1000; backdrop-filter: blur(2px);"></div>
+            <mat-spinner style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 1005;"></mat-spinner> -->
+        }
+        @else {
+          @for (item of showData; track $index) {
+            <div class="hotelList">
+              <div style="height: 240px; width: 240px; display: flex; justify-content: center;">
+                <img [src]="item.img" alt="圖片" style="max-height: 240px; max-width: 240px;">
+              </div>
+              <div style="margin-left: 5px;">
+                <h3 class="hotelListItem" style="margin: 0; font-size: 22px;"> {{item.name}} </h3>
+                <div class="hotelListItem">
+                  <label style="font-weight: bold;">評價：</label>
+                  {{item.opinion}}
+                </div>
+                <div class="hotelListItem">
+                  <label style="font-weight: bold;">每晚價格：</label>
+                  {{item.currency}}&nbsp;{{ item.oneNightPrice | number:'1.0-0' }}
+                </div>
+                <div class="hotelListItem">
+                  <label style="font-weight: bold;">總價：</label>
+                  {{item.currency}}&nbsp;{{ item.allPrice | number:'1.0-0' }}
+                </div>
+                <button (click)="showRoom(item)" style="margin-left: 5px; margin-top: 5px; background-color: #f5c170;  border-radius: 10px; border: 2px solid #f5c170; height: 30px;">
+                  查看詳情
+                </button>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </div>
+  }
+</div>

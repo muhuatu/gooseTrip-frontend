@@ -1,0 +1,195 @@
+<div class="tab-contenter">
+  <!--左滾動icon -->
+  <div class="d-flex align-items-center">
+    <mat-icon class="scroll-btn left" (click)="scrollLeft()"
+      >chevron_left
+    </mat-icon>
+  </div>
+  <!--tab區塊 -->
+  <div class="tabgroup">
+    <input
+      class="tab1"
+      type="radio"
+      id="tab1"
+      name="mytab"
+      checked="checked"
+      (change)="switchtab($event, 0)"
+    />
+    <label for="tab1" style="color: black">簡介</label>
+
+    @for(day of this.dayArray;track day){
+    <input
+      class="tabs"
+      type="radio"
+      name="mytab"
+      [id]="$index"
+      [checked]="$index === selectedDayIndex"
+      (change)="switchtab($event, day.day)"
+    />
+    <label [for]="$index" style="color: black">第{{ $index + 1 }}天</label>
+    }
+  </div>
+  <!--右滾動icon -->
+  <div class="d-flex align-items-center">
+    <mat-icon class="scroll-btn right" (click)="scrollRight()"
+      >chevron_right
+    </mat-icon>
+  </div>
+</div>
+<!--簡介區塊 -->
+@if(this.selectedTab==0){
+<div class="Introduction">
+  @for(day of this.dayArray;track day){
+  <div class="big">
+    <span class="date">🚩第{{ $index + 1 }}天</span>
+    <div class="content">
+      @for(spot of day.spotList;track spot){ @if($index!=0){<span
+        style="font-size: 20px"
+      >
+        ➔ </span
+      >}
+      <span style="font-size: 18px">{{ spot.spotName }}</span>
+      }
+    </div>
+  </div>
+  }
+</div>
+<!--對應日期區塊 -->
+} @if(this.selectedTab!=0){
+<!--按鈕區塊 -->
+<div class="buttosgroup">
+  @if(!this.isRevisable[selectedTab-1]){
+  <button
+    class="button"
+    [matTooltip]="
+      journey.startDate >= this.dateFormat.changeDateFormat(this.today)
+        ? ''
+        : '行程開始後不能編輯喔!'
+    "
+    matTooltipPosition="above"
+    (click)="
+      journey.startDate >= this.dateFormat.changeDateFormat(this.today)
+        ? revise(selectedTab)
+        : null
+    "
+    [disabled]="
+      journey.startDate < this.dateFormat.changeDateFormat(this.today)
+    "
+  >
+    <i class="fa-regular fa-pen-to-square" style="font-size: 1rem"></i>
+    <div>編輯</div>
+  </button>
+
+  <button class="button" (click)="refresh()">
+    <i class="fa-solid fa-arrows-rotate"></i>
+    <div>重整</div>
+  </button>
+
+  } @if(this.isRevisable[selectedTab-1]){
+  <button class="button" (click)="reviseEnd(selectedTab)">
+    <i class="fa-regular fa-floppy-disk"></i>
+    <div>儲存</div>
+  </button>
+  <button class="button" (click)="Stopdrag()">
+    @if(! isDraggable ){
+    <i class="fa-solid fa-arrow-down-1-9"></i>
+    <div>拖曳排序</div>
+    }@if( isDraggable ){
+    <i class="fa-solid fa-download"></i>
+    <div>結束排序</div>
+    }
+  </button>
+  }
+</div>
+
+<!--景點區塊 -->
+<div class="cardList">
+  @for(spot of this.dayArray[this.selectedTab - 1].spotList;track $index){
+  <div
+    class="card"
+    [id]="$index"
+    [attr.draggable]="isDraggable ? 'true' : null"
+    (dragstart)="isDraggable ? onDragStart($event, $index) : null"
+    (dragenter)="isDraggable ? onDragenter($event, $index) : null"
+    (dragend)="isDraggable ? onDropEnd($event) : null"
+  >
+    <div class="img-container">
+      <div class="cardTag">
+        {{ spot.arrivalTime
+        }}<!-- {{ $index + 1 }} -->
+      </div>
+      <img [src]="spot.spotImage" alt="" />
+    </div>
+    <div class="spot">
+      <span style="font-size: 12px"
+        ><i class="fa-solid fa-clock"></i> 停留{{
+          convert(spot.stayTime)
+        }}</span
+      >
+      <!-- <span class="arrivalTime">抵達時間 {{ spot.arrivalTime }}</span> -->
+      <span
+        class="spotName"
+        [matTooltip]="spot.spotName"
+        matTooltipPosition="above"
+        >{{ spot.spotName }}</span
+      >
+    </div>
+    <div class="icons">
+      @if(isRevisable[selectedTab - 1]){
+      <mat-icon (click)="editSpot($index)" class="editIcon">edit </mat-icon>
+      <mat-icon (click)="deleteSpot($index)" class="deleteIcon"
+        >delete
+      </mat-icon>
+      }
+    </div>
+  </div>
+  <!-- @for(route of this.dayRoute[this.selectedTab - 1].routeList;track $index){
+  @if(spot.placeId== route.startPlaceId){
+  <div
+    class="transportation"
+    (click)="isRevisable[selectedTab - 1] ? gotomap(route, $index) : null"
+  >
+    @if(route.transportation=="DRIVING"){
+    <i class="material-icons">directions_car</i>
+    } @if(route.transportation=="WALKING"){
+    <i class="material-icons">directions_walk</i>
+    } @if(route.transportation=="TRANSIT"){
+    <i class="material-icons">directions_bus</i>
+    } @if(route.transportation=="BICYCLING"){
+    <i class="material-icons">directions_bike</i>
+    }
+    <span>{{ route.routeTime }}分</span>
+  </div>
+  } }  -->
+  @if(this.dayRoute[this.selectedTab -
+  1].routeList[$index]&&this.dayArray[this.selectedTab - 1].spotList.length>1){
+  <div
+    class="transportation"
+    (click)="
+      isRevisable[selectedTab - 1]
+        ? gotomap(this.dayRoute[this.selectedTab - 1].routeList[$index], $index)
+        : null
+    "
+  >
+    @if(this.dayRoute[this.selectedTab -
+    1].routeList[$index].transportation=="DRIVING"){
+    <i class="material-icons">directions_car</i>
+    } @if(this.dayRoute[this.selectedTab -
+    1].routeList[$index].transportation=="WALKING"){
+    <i class="material-icons">directions_walk</i>
+    } @if(this.dayRoute[this.selectedTab -
+    1].routeList[$index].transportation=="TRANSIT"){
+    <i class="material-icons">directions_bus</i>
+    } @if(this.dayRoute[this.selectedTab -
+    1].routeList[$index].transportation=="BICYCLING"){
+    <i class="material-icons">directions_bike</i>
+    }
+    <span
+      >{{
+        this.dayRoute[this.selectedTab - 1].routeList[$index].routeTime
+      }}分</span
+    >
+  </div>
+  } }
+</div>
+}

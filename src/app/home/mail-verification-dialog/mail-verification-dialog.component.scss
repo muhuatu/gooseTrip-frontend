@@ -1,0 +1,111 @@
+@use "sass:color";
+$yellow: #f5c170;
+$back: #f6f3eb;
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 6;
+  backdrop-filter: blur(2px);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  min-height: 40px;
+  width: 100%;
+  gap: 25px;
+}
+
+p {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  border: none;
+  padding: 8px;
+  border: solid 2px #555;
+  border-radius: 10px;
+  background-color: #f5f6f7;
+  outline: none;
+  color: #555;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+}
+
+.buttongroup {
+  gap: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $back;
+}
+
+button {
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+
+  &.sendbut {
+    width: 100%;
+    padding: 8px;
+    border-radius: 10px;
+    background-color: #f5f6f7;
+    border: 2px #555 solid;
+    color: #555;
+  }
+
+  &.cancelbut {
+    background-color: #808080;
+    color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      background-color: #b0b0b0;
+    }
+
+    &:active {
+      background-color: #999;
+      transform: translateY(1.5px);
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  &.confirmbut {
+    background-color: #febc53;
+    color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      background-color: color.adjust(#febc53, $lightness: -5%);
+    }
+
+    &:active {
+      background-color: #febc53;
+      transform: translateY(1.5px);
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  button.sendbut.disabled {
+    all: unset !important;
+    background-color: #b8b7b7 !important;
+    color: #b8b7b7 !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+  }
+}

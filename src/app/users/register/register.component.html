@@ -1,0 +1,81 @@
+<link
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet"
+/>
+
+<div class="big">
+  <form [formGroup]="form" (ngSubmit)="register()" class="register" novalidate>
+    <div class="tit">
+      <h2>註冊帳號</h2>
+    </div>
+
+    <div class="tit">
+      <input
+        type="email"
+        formControlName="userMail"
+        placeholder="請輸入信箱"
+        required
+      />
+    </div>
+
+    <div class="tit">
+      <div class="password-wrapper">
+        <input
+          [type]="isPasswordVisibility ? 'text' : 'password'"
+          required
+          placeholder="請輸入 8-12 位數的密碼"
+          formControlName="userPassword"
+        />
+        <i
+          class="material-icons toggle-visibility"
+          (click)="isPasswordVisibilityToggle()"
+          >{{ isPasswordVisibility ? "visibility" : "visibility_off" }}</i
+        >
+      </div>
+    </div>
+
+    <div class="tit">
+      <input
+        type="text"
+        required
+        placeholder="請輸入名稱"
+        formControlName="userName"
+      />
+    </div>
+
+    <div class="tit">
+      <input
+        type="text"
+        required
+        placeholder="請輸入手機"
+        formControlName="userPhone"
+      />
+    </div>
+
+    <div class="tit">
+      <span>請選擇頭貼</span>
+      <div class="image-seletion">
+        @for(img of images; track $index){
+        <img
+          [src]="img"
+          [alt]="'image' + $index"
+          class="image"
+          [ngClass]="{ selected: selectedImage === img }"
+          (click)="selectImage(img)"
+        />
+        }
+        <!-- <img src="assets\avatar\usagi1.jpg" class="image" alt="image1" />
+        <img src="assets\avatar\usagi2.jpg" class="image" alt="image2" />
+        <img src="assets\avatar\usagi3.jpg" class="image" alt="image3" />
+        <img src="assets\avatar\usagi4.jpg" class="image" alt="image4" />
+        <img src="assets\avatar\usagi5.jpg" class="image" alt="image5" /> -->
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: row; gap: 20px;">
+        <button type="button" (click)="cancel()" class="cancel-btn">回上頁</button>
+        <button type="submit" class="register-btn">信箱驗證</button>
+    </div>
+
+  </form>
+</div>

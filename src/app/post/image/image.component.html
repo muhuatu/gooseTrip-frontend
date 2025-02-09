@@ -1,0 +1,29 @@
+<div class="d-flex flex-column justifiy-content-center">
+  <input type="file" (change)="uploadImage($event)" id="fileInput" style="display: none;"/>
+  @if(imageUrl) {
+    <img [src]="imageUrl" alt="Uploaded Image" width="200px"/>
+  }
+  <label for="fileInput" class="custom-file-label">選擇檔案</label>
+  <input type="file" (change)="uploadImage($event)" />
+
+</div>
+<input type="file" (change)="uploadImage($event)" />
+
+<div id="map" style="height: 400px; width: 400px"></div>
+<style>
+  .custom-file-label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    width: 80px;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.custom-file-label:hover {
+    background-color: #45a049;
+}
+</style>

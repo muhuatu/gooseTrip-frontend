@@ -1,0 +1,55 @@
+<div class="overlay"></div>
+<div
+  style="
+    padding: 15px;
+    background-color: #f6f3eb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  "
+>
+  <div class="container">
+
+    <div class="textgroup">
+      <h3 style="margin: 0">選擇行程</h3>
+      <p>※其他成員編輯中的行程將不可編輯。</p>
+    </div>
+
+    <!-- 選擇框 -->
+    <div class="selectedgroup">
+      <!-- 行程選擇 -->
+      <select
+        [(ngModel)]="selectedJourneyId"
+        (change)="onJourneyChange()"
+        style="width: 25vh"
+      >
+        <option [value]="null" disabled>請選擇行程</option>
+        @for(j of editList; track $index){
+        <option [value]="j.journeyId">{{ j.journeyName }}</option>
+        }
+      </select>
+      <!-- 天數選擇 -->
+      <select [(ngModel)]="selectedDay" style="width: 20vh">
+        <option [value]="null" disabled>請選擇第幾天</option>
+        @for(day of availableDays; track $index){
+        <option [value]="day" [disabled]="editingDays.includes(day)">
+          第 {{ day }} 天
+        </option>
+        }
+      </select>
+    </div>
+
+    <!-- 按鈕 -->
+    <div class="buttongroup">
+      <button class="cancelbut" (click)="onCancel()">取消</button>
+      <button
+        class="confirmbut"
+        [disabled]="!selectedJourneyId || !selectedDay"
+        (click)="onConfirm()"
+      >
+        確認
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="overlay"></div>
+<div style="padding: 20px;
+  background-color: #f6f3eb;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;">
+
+  <div class="container">
+    <h3 style="font-weight: bold; margin-bottom: 0;">信箱驗證</h3>
+    <input type="text" placeholder="請輸入驗證碼" [(ngModel)]="verificationCode">
+
+      <button class="sendbut" (click)="send()" [disabled]="isButtonDisabled" [ngClass]="{ 'disabled': isButtonDisabled }">
+        再次寄送驗證信
+        <ng-container *ngIf="isButtonDisabled; else iconTemplate">
+          {{ countdown }}秒
+        </ng-container>
+        <ng-template #iconTemplate>
+          <i class="fa-regular fa-hand-pointer" style="font-size: 1.0rem;"></i>
+        </ng-template>
+      </button>
+
+    <div class="buttongroup">
+      <button class="cancelbut" (click)="onCancel()">取消</button>
+      <button class="confirmbut" (click)="onConfirm()">確認</button>
+    </div>
+  </div>
+</div>

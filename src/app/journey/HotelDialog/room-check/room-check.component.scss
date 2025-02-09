@@ -1,0 +1,49 @@
+.hotel{
+  padding-top: 5px;
+  border: 9px solid #f5c170;
+  border-radius: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+  white-space: normal; /* 確保文字可以換行 */
+  // overflow-y:auto;
+  height: 100%;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(232, 232, 232, 0.5) rgba(255, 255, 255, 0.5); // 滾動條顏色, 滑道顏色]
+}
+.roomCard{
+  // border: 5px solid #f5c170;
+  display: flex;
+  flex-wrap: wrap; /* 使元素能換行 */
+  gap: 22px; /* 調整房間之間的間距 */
+
+  // justify-content: space-between;
+}
+.room{
+  align-items: center;
+  padding: 5px;
+  width: 30%;
+  margin: 5px;
+}
+.roomData{
+  padding: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

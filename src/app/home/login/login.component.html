@@ -1,0 +1,31 @@
+<div class="background">
+  <div style="overflow: hidden;">
+    <img src="../../../assets/Login_Goose.jpeg" alt="" style="max-width: 700px;">
+  </div>
+  <div class="frame">
+    <div class="login">去哪鵝</div>
+    <form [formGroup]="form">
+      <div class="tit"><input formControlName="account" class="accounttext" type="text" placeholder="請輸入帳號" [ngClass]="{'error': accontError}" maxlength="100"></div>
+      <div class="tit">
+        <div class="password-wrapper">
+          <input
+            formControlName="password" class="passwordtext"
+            [type]="showPassword ? 'text' : 'password'"
+            [ngClass]="{'error': passwordError}"
+            required
+            placeholder="請輸入 8-12 位數的密碼"
+            (keydown.enter)="onEnter()"
+          />
+          <i class="eyes" [ngClass]="showPassword ? 'fas fa fa-eye' : 'fas fa fa-eye-slash'" (click)="passwordVisibility()"></i>
+        </div>
+      </div>
+    </form>
+    <button class="loginbutton" (click)="showCheckDialog()">登入</button>
+    <div class="text">
+      <a (click)="register()" style="margin-right: 30px;cursor: pointer;" >註冊會員</a>
+      <a (click)="forgetPwd()" style="cursor: pointer;" >忘記密碼</a>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,110 @@
+@use "sass:color";
+$back: #f6f3eb;
+$yellow: #f5b654;
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 400px;
+  width: 100%;
+  gap: 30px;
+  margin: 30px;
+}
+
+p {
+  font-size: 14px;
+  margin: 0;
+}
+
+.textgroup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.selectedgroup {
+  gap: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+select {
+  flex: 1; // 設置選擇框等寬
+  max-width: 150px; // 添加最大寬度限制
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
+
+  &:hover {
+    border-color: #febc53;
+  }
+
+  &:focus {
+    box-shadow: 0px 0px 4px rgba(254, 188, 83, 0.7);
+  }
+}
+
+select option:disabled {
+  color: #bbb;
+  background-color: #f0f0f0;
+  font-style: italic; // 斜體
+}
+
+.buttongroup {
+  gap: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  padding: 10px; // 增加水平內邊距
+  min-width: 70px; // 統一按鈕寬度
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+
+  &.cancelbut {
+    background-color: #808080;
+    color: #fff;
+
+    &:hover {
+      background-color: #b0b0b0;
+    }
+
+    &:active {
+      background-color: #999;
+      transform: translateY(2px);
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  &.confirmbut {
+    background-color: #febc53;
+    color: #fff;
+
+    &:hover {
+      background-color: color.adjust(#febc53, $lightness: 5%);
+    }
+
+    &:active {
+      background-color: color.adjust(#febc53, $lightness: -5%);
+      transform: translateY(2px);
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    }
+  }
+}

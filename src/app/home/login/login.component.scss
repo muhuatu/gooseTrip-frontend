@@ -1,0 +1,134 @@
+@use "sass:color";
+$yellow: #f5c170;
+$back: #f6f3eb;
+$black: #555;
+
+.background {
+  height: 100vh;
+  width: 100%;
+  background-color: white;
+  // background-image: url("https://i.imgur.com/8VYiRL0.png");
+  background-size: 38%;
+  background-repeat: no-repeat;
+  background-position: left 18% bottom 0%;
+
+  .frame {
+    background-color: $back;
+    height: 100%;
+    width: 45%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column; //讓元素從上到下排列
+    align-items: center;
+    gap: 25px;
+  }
+}
+
+.login {
+  font-family: "ChenYuluoyan-Thin", cursive;
+  letter-spacing: 0.1em;
+  color: $black;
+  font-weight: 1000;
+  font-size: 500%;
+  margin-top: 10%;
+  margin-bottom: 5px;
+}
+
+.tit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  //margin-left: 40px;
+}
+
+input {
+  width: 60vh;
+  border: none;
+  padding: 10px;
+  border: solid 3px $yellow;
+  border-radius: 20px;
+  background-color: #f5f6f7;
+  outline: none;
+  color: $black;
+  font-size: large;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+}
+
+// 密碼區
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  flex: 1;
+  padding-right: 40px;
+}
+
+.eyes {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  color: #757575;
+}
+
+.eyes:hover {
+  color: #000;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column; //讓元素從上到下排列
+  align-items: center;
+  justify-items: center;
+  gap: 30px;
+}
+
+.frame input.error {
+  border: 5px solid #e64444;
+}
+
+.loginbutton {
+  margin-top: 10px;
+  width: 20%;
+  border: none;
+  padding: 8px;
+  border-radius: 15px;
+  background-color: $yellow;
+  outline: none;
+  letter-spacing: 0.1em;
+  font-size: 24px;
+  font-weight: bolder;
+  color: $black;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+  transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s; // 加入過渡效果
+  cursor: pointer;
+
+  &:hover {
+    background-color: color.adjust($yellow, $lightness: 5%);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.6);
+    transform: translateY(-0.5px);
+  }
+
+  // 按下效果
+  &:active {
+    background-color: color.adjust($yellow, $lightness: -5%);
+    transform: translateY(1px);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.text {
+  flex-direction: column;
+  align-items: center;
+  font-weight: bold;
+  font-size: 100%;
+  color: $black;
+  font-family: "Jost", sans-serif;
+}

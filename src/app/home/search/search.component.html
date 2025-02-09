@@ -1,0 +1,64 @@
+<div>
+  <!-- 地圖容器 -->
+  <div id="map" [ngClass]="{ hidden: !mode }"></div>
+
+  <!-- 地圖模式的圖表容器 -->
+  <div
+    id="photos-container"
+    class="photos-container"
+    [ngClass]="{ hidden: !mode }"
+  ></div>
+
+</div>
+
+<!-- 景點清單 -->
+<ul id="place-list" class="place-list" [ngClass]="{ hidden: mode }"></ul>
+
+<!-- 其他元素 -->
+<div class="overlay">
+
+  <!-- 搜尋框 -->
+  <div class="searchbox">
+    <i class="fas fa-search icon"></i>
+    <input
+      type="text"
+      class="search"
+      [(ngModel)]="keyword"
+      placeholder="輸入關鍵字，如：台東景點"
+      (keydown.enter)="onEnter()"
+    />
+    <button (click)="updatePlaces(keyword)" class="searchbutton">
+      搜尋
+    </button>
+  </div>
+
+  <!-- 按鈕們 -->
+  <div class="buttongroup" id="buttongroup">
+    <!-- 模式選擇 -->
+    <button (click)="changemode()" id="mode-toggle" class="button">
+      <i [ngClass]="mode ? 'fa-solid fa-clone' : 'fa-solid fa-earth-americas'"></i>
+      @if(mode==true){ 圖卡模式} @else{ 地圖模式}
+    </button>
+
+    <!-- 搜尋此區 -->
+    @if(mode==true){
+      <button
+      (click)="updatePlaces('')"
+      [ngClass]="{ hidden: !mode }"
+      class="searchnearby"
+      >
+      <i class="fa-solid fa-map-location-dot"></i> 搜尋此區
+      </button>
+    }
+
+    <!-- 載入更多 -->
+    <div id="pagination-container"></div>
+  </div>
+
+</div>
+
+
+
+
+
+

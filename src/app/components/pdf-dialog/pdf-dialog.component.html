@@ -1,0 +1,297 @@
+<div class="overlay"></div>
+
+<div class="outer">
+  <div class="title">預覽畫面</div>
+  <div class="background">
+    <!-- 首頁 -->
+    <div class="page" style="height: 250mm;">
+      <div class="intro">
+        <div class="pdfJourneyName"> {{this.journey.journeyName}} </div>
+        <div class="pdtDate">{{this.journey.startDate}} 到 {{this.journey.endDate}}</div>
+      </div>
+    </div>
+
+    <div class="page" style="min-height: 250mm;">
+      <div class="pdfTitle">
+        <div>行程簡介</div>
+        <i class="fa-solid fa-map-location-dot"></i>
+      </div>
+      @for (item of dayArray; track $index) {
+        <div class="big">
+          <span class="date">🚩DAY {{ $index + 1 }}</span>
+          <div class="content">
+            @if(item.spotList){
+              @for(spot of item.spotList;track spot){
+                @if($index!=0){
+                  <span style="font-size: 20px;"> ➔ </span>
+                }
+                <span style="font-size: 18px;">{{ spot.spotName }}</span>
+              }
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- 住宿資訊 -->
+     @if(hotelData && hotelData.length!=0){
+      <div class="page" style="min-height: 250mm;">
+        <!-- 標題 -->
+        <div class="pdfTitle">
+          <div>住宿資訊</div>
+          <i class="fa-solid fa-suitcase-rolling"></i>
+        </div>
+
+        <div class="allhotelData">
+        @for (item of hotelData; track $index) {
+          <div class="hotelBox">
+
+            <!-- 飯店資訊 -->
+            @if (item[0]) {
+              <div class="hotelNumber">
+                {{padIndex($index+1)}}
+              </div>
+
+              <div class="hotelInfo">
+                 <!-- 日期 -->
+                <div class="hotelDate">
+                  @if(dateFormat.stringAddDay(item[0].checkinDate, 1) != item[0].checkoutDate){
+                    {{dateFormat.trimYear(item[0].checkinDate)}} 到 {{dateFormat.trimYear( dateFormat.stringAddDay(item[0].checkoutDate, -1) )}}
+                  }@else {
+                    {{dateFormat.trimYear(item[0].checkinDate)}}
+                  }
+                </div>
+
+                <div class="hotelName">{{item[0].hotelName}}</div>
+
+                <!-- 房型、房數 -->
+                <div class="roomInfo">
+                  @for (room of item; track $index) {
+                    <div>{{room.roomType}} {{room.number}}間</div>
+                  }
+                </div>
+              </div>
+            }
+
+          </div>
+        }
+        </div>
+      </div>
+     }
+
+
+    <!-- 行程內頁 -->
+    @for (item of dayArray; track $index) {
+      <div class="page">
+        @if(dayArray && dayArray.length!=1){
+          <div class="pdfTitle"> 第{{item.day}}天 <span style="font-size: 80%;">{{item.date}}</span> </div>
+        }
+
+          @if(item.spotList){
+            <!-- <div class="spotIntro">
+              @for(spot of item.spotList;track spot){
+                @if($index!=0){
+                  <span style="font-size: 20px;"> ➔ </span>
+                }
+                <span style="font-size: 18px;">{{ spot.spotName }}</span>
+              }
+            </div> -->
+
+            <div class="pdfSpotList">
+              @for(spot of item.spotList;track $index){
+                <div class="pdfSpot">
+
+                  <div class="idLine">
+                    <div class="spotId">{{$index+1}}</div>
+                    <div class="line"></div>
+                  </div>
+
+                  <div class="spotDetail">
+                    <div class="pdfSpotTitle">{{spot.spotName}}</div>
+                    <div>{{trimSecond(spot.arrivalTime)}} 到 {{trimSecond(spot.departureTime)}}</div>
+                    <div style="height: 40mm;">{{spot.note}}</div>
+                  </div>
+
+                  <!-- 圖片 -->
+                  <!-- @if(spot.spotImage){
+                    <img [src]="this.imgFormat.generateImageWithPrefix(spot.spotImage)" class="pdfImg">
+                  } -->
+                </div>
+
+                <!-- 路徑 -->
+                @for(route of this.dayRoute[item.day-1].routeList;track $index){
+                  @if(spot.placeId== route.startPlaceId){
+                  <div class="transportation">
+                    @if(route.transportation=="DRIVING"){
+                      <i class="material-icons">directions_car</i>
+                    } @if(route.transportation=="WALKING"){
+                      <i class="material-icons">directions_walk</i>
+                    } @if(route.transportation=="TRANSIT"){
+                     <i class="material-icons">directions_bus</i>
+                    } @if(route.transportation=="BICYCLING"){
+                     <i class="material-icons">directions_bike</i>
+                    }
+                    <div>{{convertTime(route.routeTime)}}分</div>
+                  </div>
+                  }
+                }
+              }
+            </div>
+          }
+      </div>
+    }
+  </div>
+
+  <!-- 按鈕 -->
+  <div class="buttongroup">
+    <button class="cancelbut" (click)="onCancel()">取消</button>
+    <button class="confirmbut" (click)="onConfirm()">匯出</button>
+  </div>
+</div>
+
+<!-- PDF -->
+<div id="pdf"  class="pdf">
+  <!-- 首頁 -->
+  <div class="page" style="height: 250mm;">
+    <div class="intro">
+      <div class="pdfJourneyName"> {{this.journey.journeyName}} </div>
+      <div class="pdtDate">{{this.journey.startDate}} 到 {{this.journey.endDate}}</div>
+    </div>
+  </div>
+
+  <div class="page" style="height: 250mm;">
+    <div class="pdfTitle">
+      <div>行程簡介</div>
+      <i class="fa-solid fa-map-location-dot"></i>
+    </div>
+
+    @for (item of dayArray; track $index) {
+      <div class="big">
+        <span class="date">🚩DAY {{ $index + 1 }}</span>
+        <div class="content">
+          @if(item.spotList){
+            @for(spot of item.spotList;track spot){
+              @if($index!=0){
+                <span style="font-size: 20px;"> ➔ </span>
+              }
+              <span style="font-size: 18px;">{{ spot.spotName }}</span>
+            }
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- 住宿資訊 -->
+  @if(hotelData && hotelData.length!=0){
+    <div class="page" style="min-height: 250mm;">
+      <!-- 標題 -->
+      <div class="pdfTitle">
+        <div>住宿資訊</div>
+        <i class="fa-solid fa-suitcase-rolling"></i>
+      </div>
+
+      <div class="allhotelData">
+      @for (item of hotelData; track $index) {
+        <div class="hotelBox">
+
+          <!-- 飯店資訊 -->
+          @if (item[0]) {
+            <div class="hotelNumber">
+              {{padIndex($index+1)}}
+            </div>
+
+            <div class="hotelInfo">
+              <!-- 日期 -->
+              <div class="hotelDate">
+                @if(dateFormat.stringAddDay(item[0].checkinDate, 1) != item[0].checkoutDate){
+                  {{dateFormat.trimYear(item[0].checkinDate)}} 到 {{dateFormat.trimYear( dateFormat.stringAddDay(item[0].checkoutDate, -1) )}}
+                }@else {
+                  {{dateFormat.trimYear(item[0].checkinDate)}}
+                }
+              </div>
+
+              <div class="hotelName">{{item[0].hotelName}}</div>
+
+              <!-- 房型、房數 -->
+              <div class="roomInfo">
+                @for (room of item; track $index) {
+                  <div>{{room.roomType}} {{room.number}}間</div>
+                }
+              </div>
+            </div>
+          }
+
+        </div>
+      }
+    </div>
+  </div>
+  }
+
+
+  <!-- 行程內頁 -->
+  @for (item of dayArray; track $index) {
+    <div class="page">
+      @if(dayArray && dayArray.length!=1){
+        <div class="pdfTitle"> 第{{item.day}}天 <span style="font-size: 80%;">{{item.date}}</span> </div>
+      }
+
+        @if(item.spotList){
+          <!-- <div class="spotIntro">
+            @for(spot of item.spotList;track spot){
+              @if($index!=0){
+                <span style="font-size: 20px;"> ➔ </span>
+              }
+              <span style="font-size: 18px;">{{ spot.spotName }}</span>
+            }
+          </div> -->
+
+          <div class="pdfSpotList">
+            @for(spot of item.spotList;track $index){
+              <div class="pdfSpot">
+
+                <div class="idLine">
+                  <div class="spotId">{{$index+1}}</div>
+                  <div class="line"></div>
+                </div>
+
+                <div class="spotDetail">
+                  <div class="pdfSpotTitle">{{spot.spotName}}</div>
+                  @if(spot.arrivalTime && spot.departureTime){
+                    <div>{{trimSecond(spot.arrivalTime)}} 到 {{trimSecond(spot.departureTime)}}</div>
+                  }
+                  <div style="height: 40mm;">{{spot.note}}</div>
+                </div>
+
+                <!-- 圖片 -->
+                <!-- @if(spot.spotImage){
+                  <img [src]="this.imgFormat.generateImageWithPrefix(spot.spotImage)" class="pdfImg">
+                } -->
+              </div>
+
+              <!-- 路徑 -->
+              @for(route of this.dayRoute[item.day-1].routeList;track $index){
+                @if(spot.placeId== route.startPlaceId){
+                <div class="transportation">
+                  @if(route.transportation=="DRIVING"){
+                    <i class="material-icons">directions_car</i>
+                  } @if(route.transportation=="WALKING"){
+                    <i class="material-icons">directions_walk</i>
+                  } @if(route.transportation=="TRANSIT"){
+                   <i class="material-icons">directions_bus</i>
+                  } @if(route.transportation=="BICYCLING"){
+                   <i class="material-icons">directions_bike</i>
+                  }
+                  <div>{{convertTime(route.routeTime)}}分</div>
+                </div>
+                }
+              }
+            }
+          </div>
+        }
+    </div>
+  }
+</div>
+
+
+

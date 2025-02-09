@@ -1,0 +1,386 @@
+@use "sass:color";
+$yellow: #f5c170;
+$back: #f6f3eb;
+$black: #555;
+$red: #d5100b;
+
+.big {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(232, 232, 232, 0.5) rgba(255, 255, 255, 0.5); // 滾動條顏色, 滑道顏色
+}
+
+.header,
+.tab {
+  margin: 10px 100px;
+}
+
+/********************** 會員資料 **********************/
+.header {
+  display: flex;
+  align-items: center;
+  //margin-bottom: 10px;
+
+  .user-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-right: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .user-info {
+    flex: 1;
+
+    .user {
+      font-size: 15px;
+      color: #555;
+      //letter-spacing: 0.03em;
+      margin: 0 0 0 10px;
+    }
+
+    .user-name {
+      font-size: 25px;
+      font-weight: bold;
+      color: $black;
+      letter-spacing: 0.07em;
+      margin-left: 10px;
+    }
+  }
+
+  .action-buttons {
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 15px;
+
+    button {
+      width: 100px;
+      padding: 8px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      text-align: center;
+
+      &:hover {
+        transform: scale(1.05);
+        transition: 0.3s;
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+
+    .update-btn {
+      background-color: $yellow;
+
+      &:hover {
+        background-color: color.adjust($yellow, $lightness: 10%);
+      }
+    }
+
+    .delete-btn {
+      background-color: $red;
+
+      &:hover {
+        background-color: color.adjust($red, $lightness: 10%);
+      }
+    }
+  }
+}
+
+/********************** 我的貼文 **********************/
+
+// 沒有貼文的情況
+.without-post {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem;
+
+  p {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  button {
+    background-color: $yellow;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    padding: 0.5rem 0.8rem 0.5rem 0.8rem;
+
+    &:hover {
+      transform: scale(1.05);
+      transition: 0.3s;
+      background-color: color.adjust($yellow, $lightness: 10%);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+}
+
+// 有貼文的情況
+.journey-list,
+.post-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 30px 0;
+  min-height: 310px;
+}
+
+.journey-card,
+.post-card {
+  // width: calc(25% - 15px);
+  width: 289px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  gap: 5px;
+  // border-radius: 0 0 8px 8px;
+  border-radius: 10px; // 卡片圓角
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.journey-image,
+.post-image {
+  width: 100%;
+  min-height: 170px;
+  max-height: 170px;
+  border-radius: 0;
+  object-fit: cover; // 裁切圖片，保持比例，填滿空間
+  display: block; // 確保圖片塊狀顯示，避免間隙
+}
+
+.journey-info,
+.post-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.author-name {
+  font-size: 16px;
+  // cursor: pointer;
+}
+
+p {
+  margin: 5px 0;
+  color: $black;
+  font-size: 14px;
+}
+
+.author-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+
+h3 {
+  margin: 0;
+  padding-top: 0;
+  margin-bottom: 0.3rem;
+  font-size: 18px;
+  font-weight: bold;
+  min-height: 22px;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* 根據不同螢幕大小調整卡片排列 */
+
+@media (max-width: 1200px) {
+  .journey-card,
+  .post-card {
+    width: calc(33.33% - 15px);
+    /* 3個卡片在較大螢幕上排列 */
+  }
+}
+
+@media (max-width: 768px) {
+  .journey-card,
+  .post-card {
+    width: calc(50% - 15px);
+    /* 2個卡片在中等螢幕上排列 */
+  }
+}
+
+@media (max-width: 480px) {
+  .journey-card,
+  .post-card {
+    width: 100%;
+    /* 在較小螢幕上，卡片佔滿整個行 */
+  }
+}
+
+/********************** ICON **********************/
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  font-size: 14px;
+  // margin-bottom: -10px;
+}
+
+.footer .left {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  // justify-content: space-between;
+  /* 左側佔據剩餘空間 */
+  text-align: left;
+  margin: 0;
+  gap: 10px;
+  align-items: center;
+  /* 確保貼文時間靠左對齊 */
+}
+
+.footer .middle {
+  display: flex;
+  align-items: center;
+  /* 右側內容垂直居中 */
+  gap: 5px;
+  /* 圖標和文字之間的間距 */
+}
+
+.footer .icon {
+  display: flex;
+  align-items: center;
+  /* 保證圖標與文字垂直居中 */
+}
+
+// 貼文狀態
+.footer .right {
+  // 貼文是已發佈的狀態
+  .true {
+    background-color: #808080;
+    color: #fff;
+    border-radius: 5px;
+    padding: 0.3rem;
+  }
+
+  // 貼文是編輯中的狀態
+  .false {
+    background-color: #febc53;
+    color: #fff;
+    border-radius: 5px;
+    padding: 0.3rem;
+  }
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: #555;
+}
+
+.icon.heart {
+  color: red;
+}
+
+// 圖片與三個點點
+.image-container {
+  position: relative;
+  z-index: 1;
+}
+
+.menu-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  z-index: 2;
+}
+
+.menu-container:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.01);
+}
+
+.menu-popup {
+  position: fixed;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  overflow: hidden; // 圓角限制內容
+  white-space: nowrap; // 文字水平排列
+  z-index: 1000;
+}
+
+.menu-popup .menu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+  margin: 0 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu-popup .menu-item:hover {
+  //background-color: #f7f7f7;
+  color: $yellow;
+  transform: scale(1.01);
+  font-weight: bold;
+}
+
+.menu-popup .menu-item:first-child {
+  border-bottom: 1px solid #eee; // 增加按鈕間的分隔線
+}
+
+.menu-icon {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}

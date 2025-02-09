@@ -1,0 +1,42 @@
+$yellow: #f5c170;
+
+.invitation{
+  font-size: 22px;
+  font-weight: bold;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.user{
+  width: 350px;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  gap: 15px;
+  padding: 8px 10px;
+  align-items: center;
+  border: 3px solid #fafafae9;
+  background-color: #fafafae9;
+  border-radius: 20px;
+}
+
+.img{
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: $yellow 3px solid;
+}
+
+.username{
+  width: 180px;
+}
+
+.button{
+  border: none;
+  border-radius: 15px;
+  background-color: $yellow;
+  font-size: 18px;
+  padding: 5px 10px;
+  font-weight: bold;
+}

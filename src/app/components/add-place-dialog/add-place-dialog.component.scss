@@ -1,0 +1,230 @@
+@use "sass:color";
+$back: #f6f3eb;
+$yellow: #f5b654;
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 6;
+  backdrop-filter: blur(2px);
+}
+
+.background {
+  width: 100vh;
+  max-height: 60vh;
+  background-color: $back;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  // padding: 2%;
+  border-radius: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 5mm 5mm;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 1px;
+  width: 100%;
+}
+
+//各區塊
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.textans {
+  font-size: larger;
+  font-weight: bold;
+  // color: #555;
+  font-size: 18px;
+  width: 90%;
+  background-color: #c9c9c9;
+  text-align: center;
+  border-radius: 10px;
+  padding: 1mm;
+}
+
+.noSpot {
+  font-size: larger;
+  font-weight: bold;
+  color: #555;
+  font-size: 20px;
+}
+
+.choice {
+  // padding-left: 3mm;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-weight: bolder;
+  font-size: 18px;
+  color: #555;
+  gap: 2mm;
+  cursor: pointer;
+}
+
+.fa-regular {
+  font-size: 1.3rem;
+  height: 100%;
+}
+
+.active-plus {
+  color: color.adjust($yellow, $lightness: -10%) !important;
+}
+// .line {
+//   width: 100%;
+//   display: flex;
+//   flex-direction: row-reverse;
+//   align-items: center;
+//   justify-content: space-between; //兄弟選擇器，讓裡面html在前的元素可以影響他的下一個元素
+// }
+
+//虛線
+// .divider {
+//   height: 2px; /* 控制虛線的高度 */
+//   flex: 1;
+//   justify-self: center;
+//   background-color: rgb(144, 140, 140);
+//   background: repeating-linear-gradient(
+//     to right,
+//     rgb(144, 140, 140) 0,
+//     rgb(144, 140, 140) 11px,
+//     /* 線段長度10px */ transparent 11px,
+//     /* 線段結束 */ transparent 15px /* 空白間隔15-11px */
+//   );
+// }
+
+// .plus {
+//   width: 27px;
+//   height: 27px;
+//   padding: 5px;
+//   outline: none;
+//   border-radius: 100%;
+//   background-color: rgb(144, 140, 140);
+//   color: $back;
+//   cursor: pointer;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+
+//   &:hover {
+//     background-color: $yellow; //#7ba5ce
+//   }
+
+//   &:hover + .divider {
+//     background-color: $yellow;
+//     background: repeating-linear-gradient(
+//       to right,
+//       $yellow 0,
+//       $yellow 11px,
+//       /* 線段長度10px */ transparent 11px,
+//       /* 線段結束 */ transparent 15px /* 空白間隔15-11px */
+//     );
+//   }
+// }
+
+// .active-plus {
+//   background-color: $yellow !important;
+// }
+
+// .active-divider {
+//   background-color: $yellow !important;
+//   background: repeating-linear-gradient(
+//     to right,
+//     $yellow 0,
+//     $yellow 11px,
+//     transparent 11px,
+//     transparent 15px
+//   ) !important;
+// }
+
+//兩個按鈕
+.button-group {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  gap: 20px;
+}
+
+.cancel-button,
+.next-button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 800;
+  color: #555;
+  transition: transform 0.1s, box-shadow 0.1s;
+
+  &.cancel-button {
+    background-color: #ccc;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      background-color: #b0b0b0;
+    }
+
+    &:active {
+      background-color: #999;
+      transform: translateY(1.5px);
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  &.next-button {
+    background-color: $yellow;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      background-color: color.adjust($yellow, $lightness: -5%);
+    }
+
+    &:active {
+      background-color: $yellow;
+      transform: translateY(1.5px);
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+//滾輪
+::-webkit-scrollbar {
+  width: 9px; /* 滾輪寬度 */
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b3b1b1; //滾輪本體
+  border-radius: 15px;
+  transition: background 0.3s ease; //增加平滑效果
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(41, 40, 40, 0.8); //滑鼠移上更深的透明色
+}

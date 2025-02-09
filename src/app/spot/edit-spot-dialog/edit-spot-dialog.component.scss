@@ -1,0 +1,158 @@
+@use "sass:color";
+$back: #f6f3eb;
+$yellow: #f5b654;
+
+.background {
+  width: 130vh;
+  height: 85vh;
+  background-color: $back;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  padding: 2%;
+  border-radius: 10px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 90%;
+}
+
+.field {
+  display: flex;
+  flex-direction: row;
+}
+
+.name,
+.note {
+  &:focus {
+    border: 2px solid #5b5b5b;
+    outline: none;
+    transform: scale(1.01); //放大
+  }
+}
+
+// 時間區塊
+.arrival-time {
+  appearance: none; /* 移除內建樣式 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+
+.time-fields {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%;
+  align-items: stretch;
+}
+
+//各區塊
+.field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.field-stay-time {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.field-stay-time select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.field-stay-time span, .field span {
+  width: 100%;
+  font-size: larger;
+  font-weight: bold;
+  color: #555;
+  padding-left: 0.2rem;
+  padding-bottom: 0.2rem;
+}
+
+.field input[type="time"],
+.field input[type="text"],
+.field input[type="date"],
+.field textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1em;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.button-group {
+  position: fixed;
+  bottom: 5%;
+  right: 9.5%;
+  display: flex;
+  justify-content: flex-end;
+  width: 95%;
+  gap: 20px;
+}
+
+.cancel-button,
+.next-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 800;
+  color: #555;
+  transition: transform 0.1s, box-shadow 0.1s;
+
+  &.cancel-button {
+    background-color: #ccc;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      background-color: #b0b0b0;
+    }
+
+    &:active {
+      background-color: #999;
+      transform: translateY(1.5px);
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  &.next-button {
+    background-color: $yellow;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      background-color: color.adjust($yellow, $lightness: -5%);
+    }
+
+    &:active {
+      background-color: $yellow;
+      transform: translateY(1.5px);
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+}

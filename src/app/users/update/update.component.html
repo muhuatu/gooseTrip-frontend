@@ -1,0 +1,97 @@
+<link
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet"
+/>
+
+<div class="big">
+  <form [formGroup]="form" class="update" novalidate>
+
+    <div class="tit">
+      <h2>修改會員資料</h2>
+    </div>
+
+    <div class="tit">
+      <input type="email" formControlName="userMail" [readonly]="true" />
+    </div>
+
+    <div class="tit">
+      <div class="password-wrapper">
+        <input
+          [type]="isOldPasswordVisible ? 'text' : 'password'"
+          formControlName="oldPassword"
+          placeholder="請輸入舊密碼"
+          required
+        />
+        <i
+          class="material-icons toggle-visibility"
+          (click)="toggleOldPasswordVisibility()"
+          >{{ isOldPasswordVisible ? "visibility" : "visibility_off" }}</i
+        >
+      </div>
+    </div>
+
+    <div class="tit">
+      <div class="password-wrapper">
+        <input
+          [type]="isNewPasswordVisible ? 'text' : 'password'"
+          formControlName="userPassword"
+          placeholder="請輸入 8-12 位數的密碼"
+          required
+        />
+        <i
+          class="material-icons toggle-visibility"
+          (click)="toggleNewPasswordVisibility()"
+          >{{ isNewPasswordVisible ? "visibility" : "visibility_off" }}</i
+        >
+      </div>
+    </div>
+
+    <div class="tit">
+      <input
+        type="text"
+        required
+        placeholder="請輸入名稱"
+        formControlName="userName"
+      />
+    </div>
+
+    <div class="tit">
+      <input
+        type="text"
+        required
+        placeholder="請輸入手機"
+        formControlName="userPhone"
+      />
+    </div>
+
+    <div class="tit">
+      <span>請選擇頭貼</span>
+      <div class="image-seletion">
+        @for(img of images; track $index){
+        <img
+          [src]="img"
+          [alt]="'image' + $index"
+          class="image"
+          [ngClass]="{ selected: selectedImage === img }"
+          (click)="selectImage(img)"
+        />
+        }
+      </div>
+    </div>
+
+    <div class="btn">
+      <div class="tit">
+        <button type="button" (click)="cancel()" class="cancel-btn">回上頁</button>
+      </div>
+      <div class="tit">
+        <button type="button" (click)="update()" class="update-btn">
+          修改資料
+        </button>
+      </div>
+    </div>
+
+    <!-- <div class="tit">
+      <a href="/homepage">返回首頁</a>
+    </div> -->
+  </form>
+</div>

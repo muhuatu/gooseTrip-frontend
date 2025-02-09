@@ -1,0 +1,196 @@
+@use "sass:color";
+$yellow: #f5c170;
+$back: #f6f3eb;
+$black: #555;
+
+.big {
+  max-height: 100vh;
+  margin: 0;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(232, 232, 232, 0.5) rgba(255, 255, 255, 0.5); // 滾動條顏色, 滑道顏色
+}
+
+.register {
+  padding: 30px;
+  border-radius: 30px 30px 0 0;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: $back;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  gap: 30px; // tit的間距
+  margin: 3% auto 0%;
+}
+
+h2 {
+  font-family: "ChenYuluoyan-Thin", cursive;
+  letter-spacing: 0.1em;
+  color: $black;
+  font-weight: 700;
+  font-size: 65px;
+}
+
+// form 裡面的元素
+.tit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  //margin-left: 40px;
+}
+
+input {
+  width: 45vh;
+  border: none;
+  padding: 10px;
+  border: solid 3px $yellow;
+  border-radius: 20px;
+  background-color: #f5f6f7;
+  outline: none;
+  color: $black;
+  font-size: large;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+}
+
+// 密碼區
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  flex: 1;
+  padding-right: 40px;
+}
+
+.toggle-visibility {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  color: #757575;
+}
+
+.toggle-visibility:hover {
+  color: #000;
+}
+
+// 頭貼
+span {
+  color: $black;
+  font-size: large;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  margin-bottom: 25px;
+}
+
+.image-seletion {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 30px;
+}
+
+.image {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid white;
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover {
+    border: 5px solid $yellow;
+    transform: scale(1.1);
+  }
+
+  &:active {
+    border: 5px solid $yellow;
+    transform: scale(1.1);
+  }
+}
+
+.image.selected {
+  border: 5px solid $yellow;
+  transform: scale(1.1);
+}
+
+// 註冊按鈕
+.register-btn {
+  margin: 10px;
+  width: 120px;
+  border: none;
+  padding: 8px;
+  border-radius: 20px;
+  background-color: $yellow;
+  outline: none;
+  letter-spacing: 0.1em;
+  font-size: 22px;
+  font-weight: bolder;
+  color: white;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s; // 加入過渡效果
+  cursor: pointer;
+
+  &:hover {
+    background-color: color.adjust($yellow, $lightness: 5%);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-0.5px);
+  }
+
+  // 按下效果
+  &:active {
+    background-color: color.adjust($yellow, $lightness: -5%);
+    transform: translateY(1px);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+a {
+  display: flex;
+  justify-content: center;
+  font-size: 100%;
+  font-weight: bold;
+  color: $black;
+  font-family: "Jost", sans-serif;
+  text-decoration: none;
+}
+
+a:hover,
+a:active {
+  color: rgba(100, 100, 100, 0.7);
+}
+
+.cancel-btn {
+  margin: 10px;
+  width: 120px;
+  border: none;
+  padding: 8px;
+  border-radius: 20px;
+  background-color: $black;
+  outline: none;
+  letter-spacing: 0.1em;
+  font-size: 22px;
+  font-weight: bolder;
+  color: white;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s; // 加入過渡效果
+  cursor: pointer;
+
+  &:hover {
+    background-color: color.adjust($black, $lightness: 5%);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-0.5px);
+  }
+
+  // 按下效果
+  &:active {
+    background-color: color.adjust($black, $lightness: -5%);
+    transform: translateY(1px);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+  }
+}

@@ -1,0 +1,146 @@
+<div class="big">
+  <div class="header">
+    <img [src]="userImage" alt="頭貼" class="user-image" />
+    <div class="user-info">
+      <p class="user-name">{{ userName }}</p>
+      <p class="user">{{ userPhone }}</p>
+      <p class="user">{{ userMail }}</p>
+    </div>
+    <div class="action-buttons">
+      <button (click)="toUpdate()" class="update-btn">修改資料</button>
+    </div>
+  </div>
+
+  <div class="tab">
+    <mat-tab-group>
+      <mat-tab label="我的貼文">
+
+        @if (myPosts.length == 0) {
+        <div class="without-post">
+          <p>貼文區仍是一片荒蕪之地，</p>
+          <p>趕快來耕耘吧</p>
+          <button (click)="toJourney()">前往行程</button>
+          <p>缺乏靈感嗎?</p>
+          <p>看看大家去哪鵝吧</p>
+          <button (click)="toPostHome()">貼文莊園</button>
+        </div>
+        }
+
+        <div class="journey-list">
+          @for(j of myPosts; track $index) {
+          <div class="journey-card">
+
+            <!-- 圖片與三個點 -->
+            <div class="image-container">
+              <div class="menu-container">
+                <!-- 點擊圖標切換選單 -->
+                <span class="material-symbols-outlined" (click)="toggleMenu($event, j)" matTooltip="點擊修改或刪除貼文"
+                  matTooltipPosition="above">
+                  more_horiz
+                </span>
+              </div>
+              <!-- 行程圖片 -->
+              @if (j.spotImage) {
+              <img [src]="this.imgFormat.generateImageWithPrefix(j.spotImage)" alt="行程圖片" class="journey-image" />
+              } @else {
+              <img src="assets/default_spotImg.jpeg" alt="預設圖片" class="journey-image" />
+              }
+            </div>
+
+            <!-- 彈出選單(因為會被圖片容器壓過，所以獨立出來) -->
+            @if(menuVisible){
+            <div class="menu-popup" [style.top.px]="menuTop" [style.left.px]="menuLeft">
+              <button class="menu-item" (click)="editPost()">
+                <mat-icon class="menu-icon">edit</mat-icon>編輯</button>
+              <button class="menu-item" (click)="deletePost(j.postId)">
+                <mat-icon class="menu-icon">delete</mat-icon>刪除</button>
+            </div>
+            }
+
+            <div class="journey-info">
+              <h3 matTooltip="查看{{ j.journeyName }}" matTooltipPosition="above"
+                (click)="postContent(j.userMail, j.postId, j.journeyId)">{{ j.journeyName }}</h3>
+
+              <!-- 作者資訊 -->
+              <div class="author-info">
+                <img [src]="j.userImage || 'assets/avatar/Null_Goose.jpeg'" alt="avatar" class="author-avatar" />
+                <h5 class="author-name">{{ j.userName }}</h5>
+              </div>
+
+              <!-- 底部 -->
+              <div class="footer">
+                <!-- 貼文發佈日期 -->
+                <div class="left">
+                  <p style="margin: 0;">{{ j.postTime }}</p>
+                  <!-- 讚數 -->
+                  <div class="middle">
+                    <mat-icon class="icon thumbUp" matTooltip="貼文內頁才可操作" matTooltipPosition="below">thumb_up</mat-icon>
+                    <span>{{ j.thumbUp }}</span>
+                  </div>
+                </div>
+                <!-- 貼文狀態 -->
+                <div class="right">
+                  <span [ngClass]="{'true': j.published, 'false': !j.published}">{{ j.published ? '已發佈' : '編輯中' }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </mat-tab>
+
+      <mat-tab label="收藏貼文">
+
+        <!-- 沒有收藏貼文 -->
+        @if (myFavoritePosts.length == 0) {
+          <div class="without-post">
+            <p>收藏區仍是一片荒蕪之地，</p>
+            <p>趕快來挖寶吧</p>
+            <button (click)="toPostHome()">貼文莊園</button>
+          </div>
+        } @else {
+          <!-- 有收藏貼文 -->
+          <div class="post-list">
+            @for(p of myFavoritePosts; track $index) {
+              <div class="post-card">
+                @if (p.spotImage) {
+                  <img [src]="this.imgFormat.generateImageWithPrefix(p.spotImage)" alt="貼文圖片" class="post-image" />
+                } @else {
+                  <img src="assets/default_spotImg.jpeg" alt="預設圖片" class="post-image" />
+                }
+
+                <div class="post-info">
+                  <!-- 收藏的貼文為已發佈 -->
+                  @if (!p.published) {
+                    <!-- 收藏的貼文在編輯中 -->
+                    <h3 matTooltip="{{ p.journeyName }}編輯中，無法查看" matTooltipPosition="above">{{ p.journeyName }}</h3>
+                  } @else {
+
+                    <h3 matTooltip="查看{{ p.journeyName }}" matTooltipPosition="above"
+                    (click)="postContent(p.userMail, p.postId, p.journeyId)">{{ p.journeyName }}</h3>
+                  }
+                  <!-- 作者資訊 -->
+                  <div class="author-info" style="height: 350px;">
+                    <img [src]="p.userImage || 'https://i.imgur.com/Y1GLBdW.png'" alt="avatar" class="author-avatar" />
+                    <h5 class="author-name" matTooltip="查看他的貼文" matTooltipPosition="below" (click)="userPost(p.userMail)">{{
+                      p.userName }}</h5>
+                  </div>
+
+                  <!-- 底部 -->
+                  <div class="footer">
+                    <p class="left" style="margin: 0;">{{ p.postTime }}</p>
+                    <div class="middle">
+                      <mat-icon class="icon heart" matTooltip="貼文內頁才可操作" matTooltipPosition="below">favorite</mat-icon>
+                      <mat-icon class="icon thumbUp" matTooltip="貼文內頁才可操作" matTooltipPosition="below">thumb_up</mat-icon>
+                      <span>{{ p.thumbUp }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

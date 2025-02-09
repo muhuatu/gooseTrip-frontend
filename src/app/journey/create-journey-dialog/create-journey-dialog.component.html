@@ -1,0 +1,107 @@
+<div class="background">
+  <div class="title">{{ isUpdating ? "更新" : "建立新" }}行程</div>
+
+  <div class="container">
+    <div class="field">
+      <span>行程名稱</span>
+      <input
+        type="text"
+        class="name"
+        placeholder="請輸入行程名稱(16字以下)"
+        required
+        [(ngModel)]="name"
+        [ngClass]="{ error: nameError }"
+        maxlength="16"
+      />
+    </div>
+
+    <div class="field">
+      <span>日期</span>
+      <div class="date">
+        <mat-form-field class="start-date" [ngClass]="{ error: dateError }">
+          <input
+            matInput
+            class="start-date-input"
+            [matDatepicker]="startDatePicker"
+            [min]="minS"
+            [(ngModel)]="startDate"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="startDatePicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- <input
+          type="date"
+          class="start-date"
+          [(ngModel)]="startDate"
+          [min]="minS"
+          [ngClass]="{ error: dateError }"
+        /> -->
+        到
+        <mat-form-field class="end-date" [ngClass]="{ error: dateError }">
+          <input
+            matInput
+            class="end-date-input"
+            [matDatepicker]="endDatePicker"
+            [min]="startDate"
+            [(ngModel)]="endDate"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="endDatePicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #endDatePicker></mat-datepicker>
+        </mat-form-field>
+        <!-- <input
+          type="date"
+          class="end-date"
+          [(ngModel)]="endDate"
+          [min]="startDate"
+          [ngClass]="{ error: dateError }"
+        /> -->
+      </div>
+    </div>
+
+    <div class="field">
+      <span>主要交通方式</span>
+      <div class="travelMode">
+        <button
+          class="typebutton"
+          (click)="changeType('DRIVING')"
+          [ngClass]="{ active: inputType == 'DRIVING' }"
+        >
+          <i class="fas fa-car"></i>開車
+        </button>
+        <button
+          class="typebutton"
+          (click)="changeType('WALKING')"
+          [ngClass]="{ active: inputType == 'WALKING' }"
+        >
+          <i class="fas fa-walking"></i>步行
+        </button>
+        <button
+          class="typebutton"
+          (click)="changeType('TRANSIT')"
+          [ngClass]="{ active: inputType == 'TRANSIT' }"
+        >
+          <i class="fas fa-bus"></i>大眾運輸
+        </button>
+        <button
+          class="typebutton"
+          (click)="changeType('BICYCLING')"
+          [ngClass]="{ active: inputType == 'BICYCLING' }"
+        >
+          <i class="fas fa-bicycle"></i>腳踏車
+        </button>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button (click)="cancel()" class="cancel-button">取消</button>
+      <button (click)="save()" class="next-button">儲存</button>
+    </div>
+  </div>
+</div>

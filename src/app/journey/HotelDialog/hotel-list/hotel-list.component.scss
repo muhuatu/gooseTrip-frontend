@@ -1,0 +1,155 @@
+.tab {
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+  height: 100pxpx;
+  margin-top: -5px;
+  padding: 0;
+  display: flex;
+  margin-bottom: -5px;
+  z-index: 10;
+  position: relative;
+}
+
+.tablinks {
+  background-color: inherit;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  border: 2px solid #f5c170;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  width: 90px;
+
+}
+
+.tablinks.active {
+  background-color: #f5c170;
+
+}
+
+.tabcontent {
+  display: none;
+  border-top: none;
+  margin: 0;
+  padding: 0;
+}
+
+.search{
+  border: 2px solid #f5c170;
+  background-color: #f5c170;
+  height: 50px;
+  padding-left: 10px;
+  border-radius: 5px;
+  display: flex;
+  z-index: 100;
+  position: relative;
+}
+
+.select {
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 16px;
+  width: 180px;
+  margin: 1%;
+  height: 35px;
+}
+
+.select:focus {
+  outline: none;             /* 移除瀏覽器默認的選中外框 */
+  border-color: #f5c170;     /* 聚焦時的邊框顏色變為橙色 */
+}
+
+
+.hotel{
+  background-color: #f5c170;
+  position: relative;
+  z-index: 10;
+  margin-top: -5px;
+  padding-top: 5px;
+  border: 5px solid #f5c170;
+  border-bottom: 15px solid #f5c170;
+  padding-left: 10px;
+  padding-right: 10px;
+  overflow-wrap: break-word;
+  white-space: normal;
+  overflow-y: auto;
+  height: calc(100% - 93px);
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.hotelList{
+  overflow-x:auto;
+  border: 2px solid #f5c170; /* 設定邊框顏色為綠色 */
+  border-radius: 5px;
+  background-color: white;
+  padding: 10px;
+  margin-top: 10px;
+  display: flex;
+}
+
+.hotelListItem{
+  padding: 5px;
+}
+
+.mat-progress-spinner, .mat-spinner {
+  animation: mat-progress-spinner-stroke-rotate 2s linear infinite !important;
+}
+
+.custom-button{
+  margin-left: 1%;
+  padding-left: 5px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  height: 35px ;
+  width: 100px;
+  font-size: 14px;
+  margin-top: 1%;
+}
+
+::ng-deep
+.mat-mdc-icon-button .mat-mdc-button-persistent-ripple {
+  border-radius: 0% !important;
+}
+
+.overlay{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000 ;
+  backdrop-filter: blur(2px);
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.lo{
+  width: 100%;
+  font-family: "ChenYuluoyan-Thin", cursive;
+  font-weight: bold;
+  font-size: 3rem;
+  text-align: center;
+  z-index: 1005;
+}
+.loading{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 2500 !important;
+}
+
+.inner{
+  height: 95vh;
+  // overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(232, 232, 232, 0.5) rgba(255, 255, 255, 0.5); // 滾動條顏色, 滑道顏色
+}

@@ -1,0 +1,197 @@
+@use "sass:color";
+$back: #f6f3eb;
+$yellow: #f5c170;
+
+.select {
+  //border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 16px;
+  width: 40%;
+  margin: 5% 2% 3% 2%;
+  height: 50px;
+  border: none
+}
+
+.select:focus {
+  outline: none;
+  /* 移除瀏覽器默認的選中外框 */
+  //border-color: #f5c170;     /* 聚焦時的邊框顏色變為橙色 */
+}
+
+.input_no {
+  width: 50px;
+  /* 確保輸入框不會過大 */
+  text-align: center;
+  /* 文字置中 */
+  border: none;
+  /* 移除邊框 */
+  background: transparent;
+  /* 背景透明 */
+  font-size: 16px;
+  /* 字體大小 */
+}
+
+.date {
+  width: 40%;
+  margin: 3% 2%;
+  background: transparent;
+  height: 50px;
+  //border-color: #ccc;
+}
+
+.member {
+  display: flex;
+  flex-direction: row;
+  /* 水平排列 */
+  justify-content: space-between;
+  /* 靠左排列 */
+  align-items: center;
+  /* 垂直居中 */
+  //border: 1px solid #ccc;
+  border-radius: 5px;
+  background: white;
+  height: 50px;
+  font-size: 18px;
+  width: 88%;
+  padding-left: 2%;
+}
+
+.member>div {
+  margin-left: 10px;
+  /* 減小兩者之間的間距 */
+}
+
+.adjust_num button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.adjust_num {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  /* 元素間距 */
+  width: auto;
+  /* 自適應寬度 */
+  margin-left: auto;
+  /* 將 adjust_num 推至右側 */
+}
+
+::ng-deep .mdc-text-field {
+  // 去除Datepicker的背景->變透明
+  background: white !important;
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  // 去除Datepicker下方空白 ->給錯誤訊息的位置
+  display: none !important;
+}
+
+::ng-deep .mdc-line-ripple {
+  //去除Datepicker底線 ->不是邊框
+  display: none !important;
+}
+
+::ng-deep .mdc-text-field {
+  border-radius: 5px !important;
+  //border: 2px solid #f5c170;
+}
+
+::ng-deep.mat-mdc-form-field-infix {
+  padding-bottom: 5px;
+}
+
+::ng-deep .mat-mdc-icon-button .mat-mdc-button-touch-target {
+  height: 36px !important;
+  width: 36px !important;
+}
+
+::ng-deep .mat-mdc-form-field-infix {
+  min-height: 45px !important;
+}
+
+::ng-deep .mat-mdc-form-field-flex {
+  height: 45px !important;
+}
+
+::ng-deep .mat-mdc-form-field-infix {
+  display: flex !important;
+  align-items: center !important;
+  /* 垂直置中 */
+}
+
+::ng-deep .mat-mdc-form-field-infix .mat-mdc-floating-label {
+  margin: 0 !important;
+  /* 確保沒有多餘的間距影響位置 */
+}
+
+.bottom_button {
+  width: 80px;
+  padding: 5px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: large;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s; // 加入過渡效果
+
+  &:hover {
+    background-color: color.adjust($yellow, $lightness: 5%);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-0.5px);
+  }
+
+  &:active {
+    background-color: color.adjust($yellow, $lightness: -5%);
+    transform: translateY(1px);
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.check {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 25px;
+  height: 25px;
+  border: 1px solid #ccc;
+  /* 邊框顏色 */
+  background-color: white;
+  /* 背景透明 */
+  cursor: pointer;
+  border-radius: 4px;
+  /* 可選：圓角效果 */
+  margin-right: 6px;
+}
+
+/* 勾選狀態的樣式 */
+.check:checked {
+  border: 1px solid #ccc;
+  background-color: white;
+  /* 改成有色背景 */
+  // border-color: white; /* 邊框同樣改為一致 */
+  width: 25px;
+  height: 25px;
+}
+
+/* 勾選狀態時的打勾符號 */
+.check:checked::before {
+  content: "✔";
+  /* 打勾符號 */
+  font-size: 16px;
+  font-weight: bold;
+  color: #f5c170 !important;
+  /* 打勾符號顏色 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}

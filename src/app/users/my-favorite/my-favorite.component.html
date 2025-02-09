@@ -1,0 +1,12 @@
+<div id="map"></div>
+<div style="overflow: auto; height: 100%; display: flex-direction = column; justify-content: center; align-items: center;">
+  <div class="title">我的最愛</div>
+  @if (plcaeIdList==null) {
+    <div class="back">
+      目前還沒有我的最愛
+      <div class="gosearch" (click)="goSearch()">前往探索<i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i></div>
+    </div>
+  }@else {
+    <div id="places-container" class="places-container"></div>
+  }
+</div>

@@ -1,0 +1,71 @@
+<div class="overlay"></div>
+<div class="background">
+
+  @if(spotList.length==0){
+  <div class="noSpot">
+    這天沒有行程唷，要直接加入嗎?
+  </div>
+  }@else {
+  <div class="title">
+    請選擇要加在哪鵝?
+  </div>
+  }
+
+
+  <div class="container">
+    @if(spotList[0] && spotList[0].spotName){
+    <div class="choice" (click)="select(-1)" [ngClass]="{'active-plus': activeIndex == -1}">
+      @if(activeIndex != -1){
+      <i class="fa-regular fa-circle"></i>
+      }@else {
+      <i class="fa-regular fa-circle-check"></i>
+      }
+      <div class="text">加到這裡鵝</div>
+    </div>
+    }
+    <!-- @if(activeIndex == -1 && spotList[0] && spotList[0].spotName){
+      <div class="text">加在{{spotList[0].spotName}}之前</div>
+    }
+    <div class="line">
+      <div class="plus" (click)="select(-1)"[ngClass]="{'active-plus': activeIndex == -1}">
+        <i class="fas fa-check" style="font-size: 1.0rem; font-weight: bold;"></i>
+      </div>
+      <div class="divider" [ngClass]="{'active-divider': activeIndex == -1}"></div>
+    </div> -->
+    @for (item of spotList; track $index) {
+    <div class="field">
+      <div class="textans">{{item.spotName}}</div>
+    </div>
+    <!-- @if(item.spotName && spotList[$index+1] && spotList[$index+1].spotName){ -->
+    <div class="choice" (click)="select($index)" [ngClass]="{'active-plus': activeIndex == $index}">
+      @if(activeIndex != $index){
+      <i class="fa-regular fa-circle"></i>
+      }@else {
+      <i class="fa-regular fa-circle-check"></i>
+      }
+      <div class="text">加到這裡鵝</div>
+    </div>
+    <!-- }@else if(item.spotName){
+        <div class="choice" (click)="select($index)" [ngClass]="{'active-plus': activeIndex == $index}">
+          @if(activeIndex != $index){
+            <i class="fa-regular fa-circle"></i>
+          }@else {
+            <i class="fa-regular fa-circle-check"></i>
+          }
+          <div class="text">加到最後面</div>
+        </div>
+      } -->
+    <!-- <div class="line">
+        <div class="plus" (click)="select($index)" [ngClass]="{'active-plus': activeIndex == $index}">
+          <i class="fas fa-check" style="font-size: 1.0rem; font-weight: bold;"></i>
+        </div>
+        <div class="divider" [ngClass]="{'active-divider': activeIndex == $index}"></div>
+      </div> -->
+    }
+  </div>
+
+  <div class="button-group">
+    <button (click)="cancel()" class="cancel-button">取消</button>
+    <button (click)="save()" class="next-button">{{spotList.length==0? '確定' : '儲存'}}</button>
+  </div>
+</div>

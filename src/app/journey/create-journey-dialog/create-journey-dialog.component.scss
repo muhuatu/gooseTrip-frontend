@@ -1,0 +1,210 @@
+@use "sass:color";
+$back: #f6f3eb;
+$yellow: #f5b654;
+
+.background {
+  width: 130vh;
+  height: 70vh;
+  background-color: $back;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  padding: 2%;
+  border-radius: 10px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+//各區塊
+.field {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.field span {
+  font-size: larger;
+  font-weight: bold;
+  color: #555;
+}
+
+.name{
+  padding: 8px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #fafafae9;
+  &:focus {
+    border: 2px solid #5b5b5b;
+    outline: none;
+    transform: scale(1.01); //放大
+  }
+}
+.start-date,
+.end-date{
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  &:focus {
+    border: 2px solid #5b5b5b;
+    outline: none;
+    transform: scale(1.01); //放大
+  }
+}
+::ng-deep .end-date-input,.start-date-input{
+  font-size: 18px !important;
+}
+
+::ng-deep .mdc-text-field {
+  // Datepicker的背景
+  background: #fafafae9 !important;
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  // 去除Datepicker下方空白 ->給錯誤訊息的位置
+  display: none !important;
+}
+
+::ng-deep .mdc-line-ripple {
+  //去除Datepicker底線 ->不是邊框
+  display: none !important;
+}
+
+
+input::placeholder,
+textarea::placeholder {
+  font-size: 16px;
+  font-weight: bold;
+  color: #939292;
+}
+
+.field mat-form-field.error {
+  border: 5px solid #e64444;
+}
+
+.field input.error {
+  border: 5px solid #e64444;
+}
+
+.start-date,
+.end-date {
+  width: 50%;
+}
+
+.start-date::placeholder,
+.end-date::placeholder {
+  font-weight: bold;
+  color: #555;
+}
+
+.date {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #555;
+}
+
+//交通方式
+.travelMode {
+  display: flex;
+  flex-direction: row;
+  // justify-content: center;
+  gap: 3.5%;
+}
+
+.typebutton {
+  width: 20%;
+  cursor: pointer;
+  padding: 5px 8px;
+  background-color: #fafafae9;
+  color: #555;
+  font-weight: 550;
+  font-size: large;
+  border: 2px #ccc solid;
+  border-radius: 15px;
+
+  &:hover {
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-0.05px);
+  }
+}
+
+.typebutton.active {
+  transform: translateY(0.05px);
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+  background-color: $yellow;
+  border: 3px $yellow solid;
+}
+
+.typebutton i {
+  margin-right: 5px;
+}
+
+//兩個按鈕
+.button-group {
+  position: fixed;
+  bottom: 6%;
+  right: 7%;
+  display: flex;
+  justify-content: flex-end;
+  width: 95%;
+  gap: 20px;
+}
+
+.cancel-button,
+.next-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 800;
+  color: #555;
+  transition: transform 0.1s, box-shadow 0.1s;
+
+  &.cancel-button {
+    background-color: #ccc;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      background-color: #b0b0b0;
+    }
+
+    &:active {
+      background-color: #999;
+      transform: translateY(1.5px);
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  &.next-button {
+    background-color: $yellow;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      background-color: color.adjust($yellow, $lightness: -5%);
+    }
+
+    &:active {
+      background-color: $yellow;
+      transform: translateY(1.5px);
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+}

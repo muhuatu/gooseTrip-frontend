@@ -1,0 +1,129 @@
+<div style="display: flex; justify-content: center; ">
+  <select class="select" [(ngModel)]="cityName" (click)="onUpdate()">
+    <option value="">縣市</option>
+    @for (item of city; track $index) {
+      <option [value]="item.CityName">{{item.CityName}}</option>
+    }
+  </select>
+  <select class="select" [(ngModel)]="regionName">
+    <option value="">區域</option>
+    @for (item of regionList; track $index) {
+      <option [value]="item.AreaName">{{item.AreaName}}</option>
+    }
+  </select>
+</div>
+
+
+<div style="display: flex; justify-content: center; margin-bottom: 2%;">
+  <mat-form-field class="date">
+    <mat-label>入住日期</mat-label>
+    <input matInput [matDatepicker]="checkinPicker" [(ngModel)]="checkinDate" [placeholder]="'YYYY/MM/DD'" [min]="today" [max]="checkoutDate">
+    <mat-datepicker-toggle matIconSuffix [for]="checkinPicker"></mat-datepicker-toggle>
+    <mat-datepicker #checkinPicker startView="month"></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="date">
+    <mat-label>退房日期</mat-label>
+    <input matInput [matDatepicker]="checkoutPicker" [(ngModel)]="checkoutDate" [placeholder]="'YYYY/MM/DD'"[min]="getCheckoutMin()">
+    <mat-datepicker-toggle matIconSuffix [for]="checkoutPicker"></mat-datepicker-toggle>
+    <mat-datepicker #checkoutPicker startView="month"></mat-datepicker>
+  </mat-form-field>
+
+</div>
+
+<div style="display: flex; justify-content: center; margin: 3% 2%; height: 70px;">
+  <div class="member" >
+    <div style="display: flex; flex-direction: row; align-items: center;">
+      <img src="assets/Goose_Logo_White.jpeg" style="max-height: 40px;">
+      <div style=" margin-left: 15px;">
+        人數
+      </div>
+    </div>
+
+
+    <div class="adjust_num">
+      <button mat-icon-button (click)="subOne(1)">
+        <span class="material-symbols-outlined">do_not_disturb_on</span>
+      </button>
+      <input class="input_no" type="text" [(ngModel)]="adults" readonly>
+      <button mat-icon-button (click)="addOne(1)">
+        <span class="material-symbols-outlined">add_circle</span>
+      </button>
+    </div>
+  </div>
+</div>
+<div style="display: flex; justify-content: center; margin: -4% 2%; height: 70px;">
+  <div style="font-size: 16px; display: flex; justify-content: center; align-items: center;  margin: 2%;">
+    訂房網選擇
+  </div>
+
+  <div style="display: flex; justify-content: center; align-items: center; margin: 2%; width: 30%;">
+    <input type="checkbox" class="check" [(ngModel)]="findBooking">
+    <div>
+      Booking
+    </div>
+  </div>
+
+  <div style="display: flex; justify-content: center; align-items: center; margin: 2%;">
+    <input type="checkbox" class="check" [(ngModel)]="findAgoda">
+    <div>
+      Agoda
+    </div>
+  </div>
+</div>
+
+<!-- <div style="display: flex; justify-content: center; margin-top: 3%;">
+  <div class="member" >
+
+    <div style="display: flex; flex-direction: row; align-items: center;">
+      <img src="assets/雞蛋.png " style="max-height: 35px;">
+      <div style=" margin-left: 15px;">
+        兒童
+      </div>
+    </div>
+
+
+    <div class="adjust_num">
+      <button mat-icon-button (click)="subOne(2)">
+        <span class="material-symbols-outlined">do_not_disturb_on</span>
+      </button>
+      <input class="input_no" type="text" [(ngModel)]="children" readonly>
+      <button mat-icon-button (click)="addOne(2)">
+        <span class="material-symbols-outlined">add_circle</span>
+      </button>
+    </div>
+  </div>
+</div> -->
+
+<!-- <div style="display: flex; justify-content: center; margin-top: 3%;">
+  <div class="member" >
+
+    <div style="display: flex; flex-direction: row; align-items: center;">
+      <img src="assets/鳥巢.png " style="max-height: 35px;">
+      <div style=" margin-left: 15px;">
+        房間
+      </div>
+    </div>
+
+
+    <div class="adjust_num">
+      <button mat-icon-button (click)="subOne(3)">
+        <span class="material-symbols-outlined">do_not_disturb_on</span>
+      </button>
+      <input class="input_no" type="text" [(ngModel)]="room" readonly>
+      <button mat-icon-button (click)="addOne(3)">
+        <span class="material-symbols-outlined">add_circle</span>
+      </button>
+    </div>
+  </div>
+</div> -->
+<div style="display: flex; justify-content: center; margin-top: 5%; gap: 20px;">
+  <button (click)="clear()" class="bottom_button"
+   style="background-color: #929090; border: 2px solid #929090;">
+    清空
+  </button>
+  <button (click)="search()"  class="bottom_button"
+   style="background-color: #f5c170; border: 2px solid #f5c170;">
+    搜尋
+  </button>
+</div>

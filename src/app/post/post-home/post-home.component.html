@@ -1,0 +1,56 @@
+<!-- 這是社群貼文首頁 -->
+<div class="big">
+  <div class="header">
+    <!-- 標題 -->
+    <div class="title">去哪鵝</div>
+    <!-- 搜尋框 -->
+    <div class="searchbox">
+      <i class="fas fa-search icon"></i>
+      <input class="search" type="text" (keydown.enter)="searchPost(keyword)" [(ngModel)]="keyword"
+        placeholder="看看大家都去哪鵝吧..." />
+      <button class="searchbutton" (click)="searchPost(keyword)">搜尋</button>
+    </div>
+  </div>
+  <!-- 卡片容器 -->
+  <div class="scroll-part">
+    <div class="post-list">
+      @for(p of pagedPosts; track $index) {
+        @if (p.published) {
+          <div class="post-card">
+            @if (p.spotImgData) {
+              <img [src]="this.imgFormat.generateImageWithPrefix(p.spotImgData)" alt="貼文圖片" class="post-image" />
+            } @else {
+              <img src="assets/default_spotImg.jpeg" alt="預設圖片" class="post-image" />}
+            <div class="post-info">
+              <!-- 點擊行程名稱到貼文內容頁 -->
+              <h3 matTooltip="查看{{ p.journeyName }}" matTooltipPosition="above"
+                (click)="postContent(p.userMail, p.postId, p.journeyId)">{{ p.journeyName }}</h3>
+              <!-- 點擊使用者名稱到使用者貼文列表頁 -->
+              <div class="user-info">
+                <img [src]="p.userImage || 'assets/avatar/Null_Goose.jpeg'" alt="avatar" class="user-avatar" />
+                <h5 matTooltip="查看他的貼文" matTooltipPosition="below" class="user-name" (click)="userPost(p.userMail)">{{
+                  p.userName }}</h5>
+              </div>
+              <div class="footer">
+                <p class="left">{{ p.postTime }}</p>
+                <div class="right">
+                  <mat-icon class="icon heart"
+                    [ngClass]="{ 'true': p.favorite, 'false': !p.favorite, 'null': p.favorite == null }"
+                    matTooltip="貼文內頁才可操作" matTooltipPosition="below">favorite</mat-icon>
+                  <mat-icon class="icon thumbUp" matTooltip="貼文內頁才可操作" matTooltipPosition="below">thumb_up</mat-icon><span>{{ p.thumbUp }}</span>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        }
+      }
+    </div>
+    <!-- 分頁控制 -->
+    <div class="paginator">
+      <mat-paginator class="page" [length]="list.length" [pageSize]="pageSize" [pageSizeOptions]="[8, 16, 32]"
+        (page)="onPageChange($event)" showFirstLastButtons>
+      </mat-paginator>
+    </div>
+  </div>
+</div>

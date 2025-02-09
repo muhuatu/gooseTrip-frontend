@@ -1,0 +1,42 @@
+<div class="hotel">
+  <div style="text-align: center; padding: 15px;">
+    <h1 style="font-weight:bolder;">儲存住宿資訊</h1>
+    <h4 style="font-weight:bolder; margin-top: 5px;">{{hotelName}}</h4>
+    <h4 style="margin-top: 5px; letter-spacing: 2px;">{{checkinDate.toISOString().split('T')[0]}} ~ {{checkoutDate.toISOString().split('T')[0]}}</h4>
+    <!-- <h4 style="margin-top: 5px; letter-spacing: 2px;">{{checkinDate}} ~ {{checkoutDate}}</h4> -->
+  </div>
+
+  <div class="roomCard">
+    @for (item of hotelData; track $index) {
+      <div class="room">
+        <img [src]="item.img" alt="圖片" class="img-thumbnail" style=" width: 240px; height: 190px; border: none; background-color: transparent;">
+        <div class="roomData" style="font-weight:bolder;">
+          {{item.roomType}}
+        </div>
+        <div class="roomData">
+          {{item.bedType}}
+        </div>
+        <div class="roomData" style="font-weight:bolder;">
+          <span>{{item.currency}}&nbsp;&nbsp;</span>
+          <span style="letter-spacing: 1px">{{ item.allPrice | number:'1.0-0' }}</span>
+        </div>
+        <div class="roomData" style="font-weight:bolder;">
+          數量&nbsp;{{item.number}}&nbsp;間
+        </div>
+      </div>
+    }
+  </div>
+
+  <div style="text-align: right;">
+    <button (click)="close(false)" style="background-color: #929090; border: 2px solid #929090; border-radius: 5px; height: 35px; width: 60px; margin: 5px;" >
+      取消
+    </button>
+    <button (click)="close(true)" style="background-color: #f5c170; border: 2px solid #f5c170; border-radius: 5px; height: 35px; width: 60px;margin: 5px;" >
+      儲存
+    </button>
+  </div>
+
+</div>
+
+
+

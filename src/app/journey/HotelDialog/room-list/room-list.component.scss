@@ -1,0 +1,67 @@
+.hotel{
+  padding-top: 10px;
+  border: 5px solid transparent;
+  border-radius: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  overflow-wrap: break-word; /* 新版本屬性，推薦使用 */
+  white-space: normal; /* 確保文字可以換行 */
+  overflow-y:auto;
+  height: 100%;
+  padding-bottom: 60px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  position: relative;
+}
+
+.hotelList{
+  overflow-x:auto;
+  border: 2px solid #f5c170; /* 設定邊框顏色為綠色 */
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.hotelListItem{
+  padding: 5px;
+}
+
+td{
+  margin-top: 15px;
+  margin-bottom: 5px;
+  padding-top: 5px;
+}
+.tdLable{
+  width: 90px;
+  margin-top: 10px;
+  text-align: center;
+}
+.adjust_num button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: transparent;
+}
+.adjust_num {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* 元素間距 */
+  width: auto; /* 自適應寬度 */
+  margin-left: auto; /* 將 adjust_num 推至右側 */
+  margin-top: 15px;
+
+}
+.input_no {
+  width: 20px; /* 確保輸入框不會過大 */
+  text-align: center; /* 文字置中 */
+  border: none; /* 移除邊框 */
+  background: transparent; /* 背景透明 */
+  font-size: 18px; /* 字體大小 */
+  font-weight: bold;
+}
+

@@ -1,0 +1,275 @@
+@use "sass:color";
+$yellow: #f5c170;
+$back: #f2e9eb;
+
+//z-index
+//導覽4、聊天室3、聊天室按鈕4、我的行程2
+
+.sidenav-block {
+  display: flex;
+  height: 100vh;
+  position: relative;
+  overflow: hidden; //隱藏超出元素範圍的內容
+}
+
+.hide {
+  // display: none;
+  visibility: hidden;
+  /* 隱藏內容，但保留容器 */
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  /* 防止內容溢出 */
+}
+
+//導覽航
+.sidenav {
+  width: 60px; //一開始的寬度
+  background-color: #ffffff;
+  transition: width 0.3s ease; //當width改變時，過渡效果的時間和方式
+  position: fixed;
+  top: 0;
+  bottom: 0; //可以設bottom讓他短一點
+  z-index: 4;
+  padding-top: 15px; //鵝跟上面的距離
+  box-shadow: 4px 0 4px rgba(0, 0, 0, 0.3);
+  overflow: hidden; // 防止內容溢出
+}
+
+.sidenav:hover {
+  width: 170px;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.logo {
+  width: 60px;
+  max-width: 60px;
+  height: auto;
+  margin-bottom: 10px;
+  transform: translateX(0); //初始位置x為0
+  transition: transform 0.3s ease;
+}
+
+.sidenav:hover .logo {
+  transform: translateX(50px);
+}
+
+.go-button.active {
+  background-color: $yellow !important;
+  // color:$yellow ;
+}
+
+.go-button {
+  background: none;
+  border: none;
+  color: #555;
+  padding: 15px;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.go-button:hover {
+  background-color: #ebe7e2;
+}
+
+.sidenav-text {
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 8px;
+  position: absolute;
+  left: 50px;
+  top: 28%; //讓文字垂直置中
+  // pointer-events: none;
+}
+
+.sidenav-text.hide {
+  visibility: hidden;
+  display: none;
+}
+
+.sidenav .fa,
+.sidenav .fa-solid {
+  font-size: 22px;
+}
+
+.user {
+  position: absolute;
+  bottom: 0;
+  height: 80px;
+  padding: 5px;
+}
+
+.userImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  // border: 1px solid #555;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.userName {
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+//搜尋區域
+.search-block {
+  margin-left: 7%; //和左邊的距離
+  width: 93%;
+  z-index: 1;
+}
+
+//我的行程
+.myJourney {
+  transition: width 10s ease;
+  transition: visibility 10s ease;
+  background-color: white;
+  // border-radius: 20px 0 0 20px;
+}
+
+.myJourney.medium {
+  position: relative;
+  right: 0;
+  top: 0;
+  width: 33%;
+  min-width: 33%;
+  max-width: 33%;
+  height: 100%;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+.myJourney.large {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 93%;
+  height: 100%;
+  z-index: 2;
+}
+
+.myJourneyButton {
+  width: 50px;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 8px;
+  background-color: $yellow;
+  color: #555;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 2;
+  visibility: visible !important;
+  /* 強制讓按鈕可見 */
+  position: fixed;
+  top: 10px;
+  right: 0;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+
+  // &:hover {
+  //   background-color: color.adjust($yellow, $lightness: 5%);
+  // }
+}
+
+.myJourneyButton.hide {
+  display: none;
+}
+
+.icons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: $yellow;
+  // border-radius: 20px 0 0 0;
+  font-size: large;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.button {
+  width: 45px;
+  height: 31px;
+  outline: none;
+  color: $back;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: #f8c87b;
+  }
+
+  &:active {
+    background-color: #e4ae56;
+  }
+}
+
+//聊天室
+.chatbutton {
+  position: fixed;
+  bottom: 20px;
+  left: 11px;
+  z-index: 4;
+  border: none;
+  border-radius: 100%;
+  color: $back;
+  background-color: $yellow;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  font-size: 1.6em;
+}
+
+.chatroom {
+  position: fixed;
+  bottom: 0;
+  left: 8.1%;
+  background-color: white;
+  width: 230px;
+  height: 300px;
+  z-index: 3;
+}
+
+//loading
+.loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2500 !important;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2000 !important;
+  backdrop-filter: blur(2px);
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.lo {
+  width: 100%;
+  font-family: "ChenYuluoyan-Thin", cursive;
+  font-weight: bold;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.PostCommentComponent {
+  display: none;
+}

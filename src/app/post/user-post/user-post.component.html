@@ -1,0 +1,42 @@
+<!-- 這是其他使用者的貼文列表頁 -->
+<div class="big">
+  <div class="header">
+    <img [src]="this.list[0].userImage" alt="頭貼" class="user-image" />
+    <div class="user-info">
+      <p class="user-name">{{ this.list[0].userName }}</p>
+    </div>
+  </div>
+  <!-- 卡片容器 -->
+  <div class="post-list">
+    @for(p of list; track $index) {
+      @if(p.published) {
+        <div class="post-card">
+          @if (p.spotImage) {
+            <img [src]="this.imgFormat.generateImageWithPrefix(p.spotImage)" alt="貼文圖片" class="post-image" />
+          } @else {
+            <img src="assets/default_spotImg.jpeg" alt="預設圖片" class="post-image" />
+          }
+          <div class="post-info">
+            <!-- 點擊行程名稱到貼文內容頁 -->
+            <h3 matTooltip="查看貼文內容" matTooltipPosition="below" (click)="postContent(p.userMail, p.postId, p.journeyId)">{{ p.journeyName }}</h3>
+            <div class="user-info">
+              <img [src]="p.userImage || '../../../assets/avatar/Null_Goose.jpeg'" alt="avatar" class="user-avatar" /><h5 class="user-name">{{ p.userName }}</h5>
+            </div>
+            <div class="footer">
+              <p class="left">{{ p.postTime }}</p>
+              <div class="right">
+                <mat-icon class="icon heart"
+                  [ngClass]="{ 'true': p.favorite, 'false': !p.favorite, 'null': p.favorite == null }"
+                  matTooltip="貼文內頁才可操作" matTooltipPosition="below">favorite</mat-icon>
+                <mat-icon class="icon thumbUp" matTooltip="貼文內頁才可操作" matTooltipPosition="below">thumb_up</mat-icon><span>{{ p.thumbUp }}</span>
+              </div>
+              <!-- <span [ngClass]="{ 'true': p.favorite, 'false': !p.favorite, 'null': p.favorite == null }" style="margin-right: 1rem;margin-left: 1rem;"><mat-icon>favorite</mat-icon></span>
+              <span style="margin-right: 0.5rem;"><mat-icon>thumb_up</mat-icon></span>{{ p.thumbUp }} -->
+              <!-- <span style="margin-left: 0.5rem; padding-right: 0.2rem;"><mat-icon>thumb_down</mat-icon></span>{{ p.thumbDown }} -->
+            </div>
+          </div>
+        </div>
+      }
+    }
+  </div>
+</div>
