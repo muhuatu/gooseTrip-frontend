@@ -1,27 +1,41 @@
-# GooseTrip
+# 📌 專案名稱
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.9.
+旅遊規劃兼社群網站
 
-## Development server
+## 📖 專案簡介
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+✔ 集結地圖搜尋、路徑與行程規劃、住宿搜尋、會員資料、貼文討論區
+✔ 整合 Google Maps API，實現地圖搜尋與路徑規劃
+✔ 使用 Angular Material 優化 UI/UX，並透過 Canva 設計樣式
+✔ 使用 HTTP Client 連接後端 API
 
-## Code scaffolding
+## 🚀 功能特色
+🔹 非會員功能
+- 首頁：推薦景點與地區供用戶選擇，並儲存搜尋用戶紀錄。
+- 地圖/圖表搜尋：使用 GoogleMap API 搜尋景點，用戶可切換地圖或圖表模式查看景點。
+- 貼文莊園：用戶可查看其他用戶的旅遊感想。會員可對其點讚、收藏、留言與複製行程。
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+🔹 會員功能
+- 註冊會員：使用信箱驗證功能。
+- 會員資料：用戶可更改名稱、手機、與頭貼。
+- 我的最愛：用戶可將心儀景點加入最愛，頁面依照地區以下拉式選單分類。
+- 規劃行程
+  - 建立行程：用戶需輸入行程名稱、旅遊日期區間、交通方式。
+  - 景點安排：提供新增景點、拖曳排序、編輯景點筆記與時間功能。
+  - 路徑規劃：景點間可選擇交通方式，選擇後會自動計算路徑與花費時間。
+  - 住宿搜尋：連接 Booking 和 Agoda 的資料，供用戶參考。
+  - 住宿內容：用戶可將心儀飯店加入行程，並在此頁提供該房型與房價的資訊。
+  - 匯出檔案：提供 PDF 匯出功能。
+  - 分享貼文：行程結束後，可分享該行程與感想，並上傳旅遊照片至貼文莊園。
 
-## Build
+## 🛠️ 技術棧
+- 前端：Angular 19, TypeScript, HTML, SCSS
+- 後端：Spring Boot, Java, MySQL(MyBatis)
+- 資料視覺化：Chart.js
+- 其他：RESTful API、Git 版本控制
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 📦 環境需求
+- Node.js 版本：`16.x` 以上
+- Angular CLI 版本：`18.x`
+- Java 版本：`17`
+- MySQL 版本：`8.0`
