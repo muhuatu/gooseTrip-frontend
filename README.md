@@ -5,10 +5,10 @@
 
 ## 📖 專案簡介
 
-✔ 集結地圖搜尋、路徑與行程規劃、住宿搜尋、會員資料、貼文討論區
-✔ 整合 Google Maps API，實現地圖搜尋與路徑規劃
-✔ 使用 Angular Material 優化 UI/UX，並透過 Canva 設計樣式
-✔ 使用 HTTP Client 連接後端 API
+- 集結地圖搜尋、路徑與行程規劃、住宿搜尋、會員資料、貼文討論區
+- 整合 Google Maps API，實現地圖搜尋與路徑規劃
+- 使用 Angular Material 優化 UI/UX，並透過 Canva 設計樣式
+- 使用 HTTP Client 連接後端 API
 
 ## 🚀 功能特色
 🔹 非會員功能
